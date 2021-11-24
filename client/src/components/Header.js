@@ -1,5 +1,6 @@
 import React from "react";
 import { Container, Nav, Navbar } from "react-bootstrap";
+import {Link} from "react-router-dom";
 
 const Header = () => {
   return (
@@ -10,8 +11,8 @@ const Header = () => {
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
             <Nav className="ml-auto">
-              <Nav.Link href="#action1"><i class="fas fa-shopping-cart"></i> Cart</Nav.Link>
-              <Nav.Link href="#action2"><i class="fas fa-sign-in-alt"></i> Sign In</Nav.Link>
+              <Link to="/cart"><i class="fas fa-shopping-cart"></i> Cart</Link>
+              <Link to="/auth"><i class="fas fa-sign-in-alt"></i> Sign In</Link>
             </Nav>
           </Navbar.Collapse>
         </Container>
