@@ -1,5 +1,6 @@
 import Button from "@restart/ui/esm/Button";
-import React from "react";
+import axios from "axios";
+import React, {useEffect, useState} from "react";
 import {
   Card,
   Col,
@@ -15,8 +16,16 @@ import products from "../products";
 
 const ProductScreen = () => {
   const params = useParams();
-  console.log(params);
-  const product = products.find((product) => product._id === params.id);
+  const [product, setProduct] = useState([])
+  useEffect(() => {
+    const fetchProduct = async () => {
+      const res = await axios.get(`/api/products/${params.id}`)
+      console.log(res)
+      setProduct(res.data)
+    }
+    fetchProduct()
+  }, [])
+  
   return (
     <>
       <Link className="btn btn-dark my-3" to="/">
