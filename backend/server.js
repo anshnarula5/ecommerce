@@ -1,11 +1,12 @@
 const express = require("express");
-const products = require("./data/products");
 const dotenv = require("dotenv");
+const productRoutes = require("./routes/productRoutes.js")
 
 dotenv.config();
 const app = express();
 
 const mongoose = require("mongoose");
+const {notFound, errorHandler} = require("./middleware/errorMiddleware.js");
 mongoose
   .connect(process.env.DB_URL, {
     useUnifiedTopology: true,
@@ -14,18 +15,11 @@ mongoose
   .then((conn) => console.log("mongoose running", conn.connection.host))
   .catch((err) => console.log("mongoose ERROR", err));
 
+app.use("/api/products", productRoutes);
 
-app.get("/", (req, res) => {
-  res.send("Api is running");
-});
+app.use(notFound)
 
-app.get("/api/products", (req, res) => {
-  res.json(products);
-});
-app.get("/api/products/:id", (req, res) => {
-  const product = products.find((product) => product._id === req.params.id);
-  res.json(product);
-});
+app.use(errorHandler)
 
 const PORT = process.env.PORT || 5000;
 
