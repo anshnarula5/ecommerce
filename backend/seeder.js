@@ -2,10 +2,9 @@ const mongoose = require('mongoose')
 const dotenv = require('dotenv')
 const users = require('./data/users.js')
 const products = require('./data/products.js')
-const User = require('./models/userModel.js')
-const Product = require('./models/productModel.js')
-const Order = require('./models/orderModel.js')
-const connectDB = require('./config/db.js')
+const User = require('./models/User.js')
+const Product = require('./models/Product.js')
+const Order = require('./models/Order.js')
 
 dotenv.config()
 
