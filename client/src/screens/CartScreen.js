@@ -1,0 +1,111 @@
+import React, { useEffect } from "react";
+import { useParams, useLocation, Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart } from "../redux/actions/cartActions";
+import {
+  Col,
+  FormControl,
+  Image,
+  ListGroup,
+  ListGroupItem,
+  Row,
+  Button,
+  Card,
+} from "react-bootstrap";
+import Message from "../components/Message";
+
+const CartScreen = () => {
+  const location = useLocation();
+  const params = useParams();
+  const productId = params.id;
+  const qty = location.search
+    ? new URLSearchParams(location.search).get("qty")
+    : 1;
+  const { cartItems } = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
+  console.log(cartItems);
+  useEffect(() => {
+    if (productId) {
+      dispatch(addToCart(productId, qty));
+    }
+  }, [productId, qty, dispatch]);
+  const removeHandler = () => {
+    // dispatch(remove);
+  };
+  return (
+    <Row>
+      <Col md={8}>
+        <h1>Shopping Cart</h1>
+        {cartItems.length === 0 ? (
+          <Message>
+            Your cart is empty <Link to="/">Go back</Link>
+          </Message>
+        ) : (
+          <ListGroup variant="flush">
+            {cartItems.map((item) => (
+              <ListGroupItem key={item.product}>
+                <Row>
+                  <Col md={2}>
+                    <Image src={item.image} alt={item.name} fluid rounded />
+                  </Col>
+                  <Col md={3}>
+                    <Link to={`/product/${item.product}`}>{item.name}</Link>
+                  </Col>
+                  <Col md={2} className="my-1">
+                    {item.price}
+                  </Col>
+                  <Col md={2} xs={6}>
+                    <FormControl
+                      className="my-1"
+                      as="select"
+                      value={item.qty}
+                      onChange={(e) =>
+                        dispatch(
+                          addToCart(item.product, Number(e.target.value))
+                        )
+                      }
+                    >
+                      {[...Array(item.countInStock).keys()].map((x) => (
+                        <option key={x + 1} value={x + 1}>
+                          {x + 1}
+                        </option>
+                      ))}
+                    </FormControl>
+                  </Col>
+                  <Col md={2} xs={6}>
+                    <Button
+                      className="mt-2"
+                      variant="light"
+                      onClick={() => removeHandler(item.product)}
+                    >
+                      <i className="fas fa-trash"></i>
+                    </Button>
+                  </Col>
+                </Row>
+              </ListGroupItem>
+            ))}
+          </ListGroup>
+        )}
+      </Col>
+      <Col md={4}>
+        <Card>
+          <ListGroup variant="flush">
+            <ListGroupItem>
+              <h5>
+                  Total Items : <bold>{(cartItems.reduce((acc, item) => acc + item.qty, 0))}</bold>
+              </h5>
+              <h5>Total Price :  ${(cartItems.reduce((acc, item) => acc + item.qty*item.price, 0))}</h5>
+            </ListGroupItem>
+          </ListGroup>
+        </Card>
+      </Col>
+    </Row>
+  );
+};
+
+export default CartScreen;
+
+
+
+
+// way jeans fashion today patch main tiger april ripple faint situate scheme

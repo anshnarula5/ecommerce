@@ -8,3 +8,7 @@ a{
 a:hover{
   color: inherit;
 }
+
+h1{
+  padding: 0.3rem;
+}
