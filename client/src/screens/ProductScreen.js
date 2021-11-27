@@ -16,6 +16,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 import Rating from "../components/Rating";
+import {addToCart} from "../redux/actions/cartActions";
 import {
   clearProductDetails,
   listProductDetails,
@@ -36,7 +37,8 @@ const ProductScreen = () => {
     };
   }, []);
   const handleAddToCart = () => {
-    navigate(`/cart/${params.id}?qty=${qty}`)
+    dispatch(addToCart(product._id, qty))
+    navigate(`/cart`)
   };
   return (
     <>
