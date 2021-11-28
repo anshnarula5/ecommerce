@@ -5,6 +5,8 @@ import {
   Card,
   Col,
   Form,
+  FormControl,
+  FormSelect,
   Image,
   ListGroup,
   ListGroupItem,
@@ -16,7 +18,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 import Rating from "../components/Rating";
-import {addToCart} from "../redux/actions/cartActions";
+import { addToCart } from "../redux/actions/cartActions";
 import {
   clearProductDetails,
   listProductDetails,
@@ -25,7 +27,7 @@ import {
 const ProductScreen = () => {
   const [qty, setQty] = useState(1);
   const params = useParams();
-  const navigate= useNavigate()
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { product, loading, error } = useSelector(
     (state) => state.productDetails
@@ -37,8 +39,8 @@ const ProductScreen = () => {
     };
   }, []);
   const handleAddToCart = () => {
-    dispatch(addToCart(product._id, qty))
-    navigate(`/cart`)
+    dispatch(addToCart(product._id, qty));
+    navigate(`/cart`);
   };
   return (
     <>
@@ -75,12 +77,12 @@ const ProductScreen = () => {
             <Col>
               <Card>
                 <ListGroup variant="flush">
-                  <ListGroupItem>
+                  <ListGroup.Item>
                     <Row>
                       <Col>Price : </Col>
                       <Col>{product.price}</Col>
                     </Row>
-                  </ListGroupItem>
+                  </ListGroup.Item>
                   <ListGroupItem>
                     <Row>
                       <Col>Status :</Col>
@@ -94,19 +96,19 @@ const ProductScreen = () => {
                       <Row>
                         <Col>Quantity :</Col>
                         <Col>
-                          <Form.Control
+                          <FormSelect
                             as="select"
                             value={qty}
                             onChange={(e) => setQty(e.target.value)}
                           >
-                            {[...Array(product.countInStock).keys()].map(
-                              (x) => (
-                                <option key={x + 1} value={x + 1}>
-                                  {x + 1}
-                                </option>
-                              )
-                            )}
-                          </Form.Control>
+                              {[...Array(product.countInStock).keys()].map(
+                                (x) => (
+                                  <option key={x + 1} value={x + 1}>
+                                    {x + 1}
+                                  </option>
+                                )
+                              )}
+                            </FormSelect>
                         </Col>
                       </Row>
                     </ListGroupItem>
