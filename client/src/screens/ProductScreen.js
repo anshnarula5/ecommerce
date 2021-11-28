@@ -26,6 +26,7 @@ import {
 
 const ProductScreen = () => {
   const [qty, setQty] = useState(1);
+  const [showAlert, setShowAlert] = useState(false)
   const params = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -40,11 +41,14 @@ const ProductScreen = () => {
   }, []);
   const handleAddToCart = () => {
     dispatch(addToCart(product._id, qty));
-    navigate(`/cart`);
+    setShowAlert(true)
+    setTimeout(() => {
+      setShowAlert(false)
+    }, 3000)
   };
   return (
     <>
-      <Link className="btn btn-dark my-3" to="/">
+      <Link className="btn btn-dark mb-1"  to="/">
         Go Back
       </Link>
       <Row>
@@ -122,6 +126,7 @@ const ProductScreen = () => {
                       Add to cart
                     </Button>
                   </ListGroupItem>
+                  {showAlert && <Message variant = "success" children = {`Added ${qty} items to cart`} />}
                 </ListGroup>
               </Card>
             </Col>

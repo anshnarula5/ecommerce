@@ -12,7 +12,7 @@ const Header = () => {
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
-            <Nav className="ml-auto">
+            <Nav className="mx-auto">
               <Nav.Link>
                 <Link to="/cart">
                   <i class="fas fa-shopping-cart"></i> Cart

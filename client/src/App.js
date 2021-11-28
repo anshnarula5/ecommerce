@@ -13,6 +13,7 @@ function App() {
       <Header />
       <main className="py-4">
         <Container>
+
           <Routes>
             <Route path = "/" element = {<HomeScreen />} />
             <Route path = "/product/:id" element = {<ProductScreen />} />

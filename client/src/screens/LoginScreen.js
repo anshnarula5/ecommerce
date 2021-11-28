@@ -1,5 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Col, Container, Form, Row, Button } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation, useNavigate } from "react-router";
+import Loader from "../components/Loader";
+import Message from "../components/Message";
+import { login } from "../redux/actions/userActions";
 
 const LoginScreen = () => {
   const [formData, setFormData] = useState({
@@ -7,17 +12,33 @@ const LoginScreen = () => {
     name: "",
     password: "",
   });
+  const location = useLocation();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const redirect = location.search ? location.search.split("=")[1] : "/";
+  const { loading, userInfo, error } = useSelector((state) => state.userLogin);
   const [toggle, setToggle] = useState(false);
   const { email, name, password } = formData;
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+  useEffect(() => {
+    if (userInfo) {
+      navigate(redirect);
+    }
+  }, [userInfo, navigate, redirect]);
+  const handleLogin = (e) => {
+      e.preventDefault()
+    dispatch(login({ email, password }));
+  };
   return (
     <Container>
       <Row className="justify-content-md-center">
+        {error && <Message variant="danger">{error}</Message>}
+        {loading && <Loader />}
         <Col xs={12} md={6}>
-          <h1 className="mb-3">Sign {!toggle ? "In": "Up"}</h1>
-          <Form>
+          <h1 className="mb-3">Sign {!toggle ? "In" : "Up"}</h1>
+          <Form onSubmit = {handleLogin}>
             {toggle && (
               <>
                 <Form.Group controlId="email" className="my-2">
@@ -54,16 +75,18 @@ const LoginScreen = () => {
             </Form.Group>
             <div className="mt-3 text-center">
               <p>
-              {!toggle ? "Don't ": "Already "}have an account ?
+                {!toggle ? "Don't " : "Already "}have an account ?
                 <Button
                   size="sm"
                   variant
                   onClick={() => setToggle((prev) => !prev)}
                 >
-                  Sign {toggle ? "In": "Up"}
+                  Sign {toggle ? "In" : "Up"}
                 </Button>
               </p>
-              <Button className="btn btn-block">Sign {!toggle ? "In": "Up"} </Button>
+              <Button className="btn btn-block" type = "submit">
+                Sign {!toggle ? "In" : "Up"}{" "}
+              </Button>
             </div>
           </Form>
         </Col>
