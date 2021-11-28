@@ -2,6 +2,7 @@ const asyncHandler = require("express-async-handler");
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const { validationResult } = require("express-validator");
 
 const loginController = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
@@ -25,7 +26,16 @@ const loginController = asyncHandler(async (req, res) => {
     token,
   });
 });
+
 const registerController = asyncHandler(async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    console.log("sadad", errors.errors);
+    res.status(400);
+    errors.errors.forEach((error) => {
+      throw new Error(error.msg);
+    });
+  }
   const { email, password, name } = req.body;
   let user = await User.findOne({ email });
   if (user) {
@@ -33,22 +43,17 @@ const registerController = asyncHandler(async (req, res) => {
     throw new Error("User already exists");
   }
   const hashedPassword = await bcrypt.hash(password, 12);
-  user = await User.create({ email, password : hashedPassword, name });
-  if (user) {
-    const id = user._id;
-    const token = jwt.sign({ id }, "secret", { expiresIn: 360000 });
+  user = await User.create({ email, password: hashedPassword, name });
+  const id = user._id;
+  const token = jwt.sign({ id }, "secret", { expiresIn: 360000 });
 
-    res.status(201).json({
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-      isAdmin: user.isAdmin,
-      token,
-    });
-  } else {
-    res.status(400);
-    throw new Error("Enter correct credentials");
-  }
+  res.status(201).json({
+    _id: user._id,
+    name: user.name,
+    email: user.email,
+    isAdmin: user.isAdmin,
+    token,
+  });
 });
 
 const getProfileController = asyncHandler(async (req, res) => {
