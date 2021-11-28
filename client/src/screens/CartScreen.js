@@ -12,6 +12,7 @@ import {
   Row,
   Button,
   Card,
+  FormSelect,
 } from "react-bootstrap";
 import Message from "../components/Message";
 
@@ -60,7 +61,7 @@ const CartScreen = () => {
                     {item.price}
                   </Col>
                   <Col md={2} xs={6}>
-                    <FormControl
+                    <FormSelect
                       className="my-1"
                       as="select"
                       value={item.qty}
@@ -75,7 +76,7 @@ const CartScreen = () => {
                           {x + 1}
                         </option>
                       ))}
-                    </FormControl>
+                    </FormSelect>
                   </Col>
                   <Col md={2} xs={6}>
                     <Button
