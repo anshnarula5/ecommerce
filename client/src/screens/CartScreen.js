@@ -24,7 +24,8 @@ const CartScreen = () => {
   const qty = location.search
     ? new URLSearchParams(location.search).get("qty")
     : 1;
-  const { cartItems } = useSelector((state) => state.cart);
+  const {cartItems} = useSelector((state) => state.cart);
+  const {userInfo} = useSelector(state => state.userLogin)
   const dispatch = useDispatch();
   console.log(cartItems);
   useEffect(() => {

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
-import { login } from "../redux/actions/userActions";
+import { login, register } from "../redux/actions/userActions";
 
 const LoginScreen = () => {
   const [formData, setFormData] = useState({
@@ -31,6 +31,10 @@ const LoginScreen = () => {
       e.preventDefault()
     dispatch(login({ email, password }));
   };
+  const handleRegister = (e) => {
+    e.preventDefault()
+   dispatch(register({email, password, name}))
+  }
   return (
     <Container>
       <Row className="justify-content-md-center">
@@ -38,7 +42,7 @@ const LoginScreen = () => {
         {loading && <Loader />}
         <Col xs={12} md={6}>
           <h1 className="mb-3">Sign {!toggle ? "In" : "Up"}</h1>
-          <Form onSubmit = {handleLogin}>
+          <Form onSubmit = {!toggle ? handleLogin : handleRegister}>
             {toggle && (
               <>
                 <Form.Group controlId="email" className="my-2">
