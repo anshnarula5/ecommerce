@@ -1,4 +1,4 @@
-import {USER_LOGIN_FAIL, USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS} from "../types";
+import {USER_LOGIN_FAIL, USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, USER_LOGOUT} from "../types";
 import axios from "axios"
 
 export const login = ({email, password}) => async (dispatch) => {
@@ -9,7 +9,7 @@ export const login = ({email, password}) => async (dispatch) => {
                 "Content-Type" : "applciation/json"
             }
         }
-        const res = await axios.post("/api/users/login", {email, password}, config);
+        const res = await axios.post("/api/users/login", {email, password});
         dispatch({type: USER_LOGIN_SUCCESS, payload: res.data});
         localStorage.setItem("userInfo", JSON.stringify(res.data))
     } catch (error) {
@@ -21,4 +21,8 @@ export const login = ({email, password}) => async (dispatch) => {
             : error.message,
       });
     }
+  };
+export const logout = () => async (dispatch) => {
+  localStorage.removeItem("userInfo")
+    dispatch({type : USER_LOGOUT})
   };

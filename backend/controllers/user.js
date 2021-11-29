@@ -5,6 +5,14 @@ const jwt = require("jsonwebtoken");
 const { validationResult } = require("express-validator");
 
 const loginController = asyncHandler(async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    console.log("sadad", errors.errors);
+    res.status(400);
+    errors.errors.forEach((error) => {
+      throw new Error(error.msg);
+    });
+  }
   const { email, password } = req.body;
   const user = await User.findOne({ email });
   if (!user) {

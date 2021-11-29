@@ -4,7 +4,12 @@ const {loginController, getProfileController, registerController} = require("../
 const auth = require("../middleware/authMiddleware")
 const router = express.Router()
 
-router.post("/login", loginController)
+
+const loginValidator = [
+    check("email", "Enter correct email").isEmail(),
+    check("password", "Enter password of atleast 6 characters").trim().isLength({min: 6}),
+]
+router.post("/login", loginValidator, loginController)
 router.get("/profile", auth, getProfileController)
 
 const registerValidator = [
