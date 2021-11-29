@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import {useParams, useLocation, Link} from "react-router-dom";
+import { useParams, useLocation, Link } from "react-router-dom";
 import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, removeFromCart } from "../redux/actions/cartActions";
@@ -19,13 +19,13 @@ import Message from "../components/Message";
 const CartScreen = () => {
   const location = useLocation();
   const params = useParams();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const productId = params.id;
   const qty = location.search
     ? new URLSearchParams(location.search).get("qty")
     : 1;
-  const {cartItems} = useSelector((state) => state.cart);
-  const {userInfo} = useSelector(state => state.userLogin)
+  const { cartItems } = useSelector((state) => state.cart);
+  const { userInfo } = useSelector((state) => state.userLogin);
   const dispatch = useDispatch();
   console.log(cartItems);
   useEffect(() => {
@@ -34,11 +34,15 @@ const CartScreen = () => {
     }
   }, [productId, qty, dispatch]);
   const removeHandler = (id) => {
-    dispatch(removeFromCart(id))
-    };
-    const handleCheckout = () => {
-        navigate("/login?redirect=shipping")
+    dispatch(removeFromCart(id));
+  };
+  const handleCheckout = () => {
+    if (!userInfo) {
+      navigate("/auth");
+    } else {
+      navigate("/shipping");
     }
+  };
   return (
     <Row>
       <Col md={8}>
@@ -112,9 +116,13 @@ const CartScreen = () => {
               </h5>
             </ListGroupItem>
             <ListGroupItem>
-                <Button className = "btn-block" onClick = {handleCheckout} disabled = {cartItems.length === 0}>
-                    Proceed to checkout
-                </Button>
+              <Button
+                className="btn-block"
+                onClick={handleCheckout}
+                disabled={cartItems.length === 0}
+              >
+                Proceed to checkout
+              </Button>
             </ListGroupItem>
           </ListGroup>
         </Card>
