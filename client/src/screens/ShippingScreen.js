@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import {useNavigate} from "react-router";
+import CheckoutSteps from "../components/CheckoutSteps";
 import {saveShippingAddress} from "../redux/actions/cartActions";
 
 const ShippingScreen = () => {
@@ -33,6 +34,7 @@ const ShippingScreen = () => {
   return (
     <Row>
       <Col md={6} className="offset-md-3">
+          <CheckoutSteps step1 step2 />
         <h1>Shipping Address</h1>
         <Form onSubmit = {handleSubmit}>
           <Form.Group className="my-2">

@@ -1,4 +1,4 @@
-import { CART_ADD_ITEM, CART_REMOVE_ITEM, SAVE_ADDRESS } from "../types";
+import { CART_ADD_ITEM, CART_REMOVE_ITEM, SAVE_ADDRESS, SAVE_PAYMENT_METHOD } from "../types";
 
 export const cartReducer = (state = { cartItems: [], shippingAddress : {} }, action) => {
   const { type, payload } = action;
@@ -23,6 +23,8 @@ export const cartReducer = (state = { cartItems: [], shippingAddress : {} }, act
       };
     case SAVE_ADDRESS:
       return {...state, shippingAddress : payload}
+    case SAVE_PAYMENT_METHOD:
+      return {...state, paymentMethod : payload}
     default:
       return state;
   }
