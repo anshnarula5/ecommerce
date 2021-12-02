@@ -2,6 +2,7 @@ const express = require("express");
 const dotenv = require("dotenv");
 const productRoutes = require("./routes/productRoutes.js")
 const userRoutes = require("./routes/userRoutes.js")
+const orderRoutes = require("./routes/orderRoutes.js")
 const cors = require("cors")
 
 dotenv.config();
@@ -23,6 +24,7 @@ app.use(cors())
 
 app.use("/api/products", productRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/orders", orderRoutes);
 
 app.use(notFound)
 

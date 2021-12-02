@@ -62,8 +62,8 @@ const orderSchema = new Schema(
     },
     isDelivered: {
       type: Boolean,
-      required: true,
       default: false,
+      required: true,
     },
     deliveredAt: {
       type: Date,

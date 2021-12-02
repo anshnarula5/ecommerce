@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router";
 import {
   Card,
   Col,
@@ -12,26 +13,47 @@ import CheckoutSteps from "../components/CheckoutSteps";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
 import { Link } from "react-router-dom";
+import { createOrder } from "../redux/actions/orderActions";
 
 const PlaceOrderScreen = () => {
-  const dipatch = useDispatch();
-  const { shippingAddress, paymentMethod, cartItems } = useSelector(
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const cart= useSelector(
     (state) => state.cart
   );
-  const handleSubmit = () => {
-
-  }
+  console.log(cart)
+    const {shippingAddress, paymentMethod, cartItems} = cart
   //Prices
   const itemsPrice = cartItems.reduce(
     (acc, item) => acc + item.price * item.qty,
     0
-  )
- 
-  const shippingPrice = itemsPrice > 100 ? 0 : 100
- 
-  const taxPrice = 0.15 * itemsPrice
- 
-  const totalPrice = itemsPrice + shippingPrice + taxPrice
+  );
+
+  const shippingPrice = itemsPrice > 100 ? 0 : 100;
+
+  const taxPrice = 0.15 * itemsPrice;
+
+  const totalPrice = itemsPrice + shippingPrice + taxPrice;
+  const { success, order, error } = useSelector((state) => state.orderCreate);
+  const handleSubmit = () => {
+    dispatch(
+      createOrder({
+        orderItems: cartItems,
+        shippingAddress,
+        paymentMethod,
+        itemsPrice,
+        shippingPrice, 
+        taxPrice,
+        totalPrice,
+      })
+    );
+  };
+  useEffect(() => {
+    // order/${order._id}
+    if (success) {
+      navigate(`/`);
+    }
+  }, [success]);
   return (
     <>
       <CheckoutSteps step1 step2 step3 step4 />
@@ -101,24 +123,31 @@ const PlaceOrderScreen = () => {
               </ListGroupItem>
               <ListGroupItem>
                 <Row>
-                <Col>Shipping</Col>
-                <Col>$ {shippingPrice.toFixed(2)} </Col>
+                  <Col>Shipping</Col>
+                  <Col>$ {shippingPrice.toFixed(2)} </Col>
                 </Row>
               </ListGroupItem>
               <ListGroupItem>
                 <Row>
-                <Col>Tax</Col>
-                <Col>$ {taxPrice.toFixed(2)} </Col>
+                  <Col>Tax</Col>
+                  <Col>$ {taxPrice.toFixed(2)} </Col>
                 </Row>
               </ListGroupItem>
               <ListGroupItem>
                 <Row>
-                <Col>Total</Col>
-                <Col>$ {totalPrice.toFixed(2)}</Col>
-               </Row>
+                  <Col>Total</Col>
+                  <Col>$ {totalPrice.toFixed(2)}</Col>
+                </Row>
               </ListGroupItem>
               <ListGroupItem>
-                <Button className="btn-block" onClick = {handleSubmit} disabled={cartItems.length === 0} >
+                {error && <Message variant="danger">{error}</Message>}
+                </ListGroupItem>
+              <ListGroupItem>
+                <Button
+                  className="btn-block"
+                  onClick={handleSubmit}
+                  disabled={cartItems.length === 0}
+                >
                   Place Order
                 </Button>
               </ListGroupItem>
