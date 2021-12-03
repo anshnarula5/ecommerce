@@ -36,7 +36,7 @@ const OrderScreen = () => {
       const { data: clientId } = await axios.get("/api/config/paypal");
       const script = document.createElement("script");
       script.type = "text/javascript";
-      script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}&currency=INR`;
+      script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}`;
       script.async = true;
       script.onload = () => {
         setSdkReady(true);
@@ -53,7 +53,7 @@ const OrderScreen = () => {
         setSdkReady(true);
       }
     }
-  }, [order, orderId, dispatch]);
+  }, [order, orderId, dispatch, paySuccess]);
 
   const successPayHandler = (paymentResult) => {
     console.log(paymentResult)
@@ -180,7 +180,7 @@ const OrderScreen = () => {
                   {!sdkReady ? (
                     <Loader />
                   ) : (
-                    <PayPalButton  currency="INR"  amount={(Math.round(order.totalPrice * 100) / 100).toFixed(2)} onSuccess = {successPayHandler} />
+                    <PayPalButton  amount={(Math.round(order.totalPrice * 100) / 100).toFixed(2)} onSuccess = {successPayHandler} />
                   )}
                 </ListGroupItem>
               )}
