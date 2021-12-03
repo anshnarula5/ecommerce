@@ -1,4 +1,4 @@
-import {USER_DETAILS_FAIL, USER_DETAILS_REQUEST, USER_DETAILS_SUCCESS, USER_LOGIN_FAIL, USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, USER_LOGOUT, USER_REGISTER_FAIL, USER_REGISTER_REQUEST, USER_REGISTER_SUCCESS} from "../types";
+import {MY_ORDERS_RESET, USER_DETAILS_FAIL, USER_DETAILS_REQUEST, USER_DETAILS_RESET, USER_DETAILS_SUCCESS, USER_LOGIN_FAIL, USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, USER_LOGOUT, USER_REGISTER_FAIL, USER_REGISTER_REQUEST, USER_REGISTER_SUCCESS} from "../types";
 import axios from "axios"
 
 export const login = ({email, password}) => async (dispatch) => {
@@ -69,5 +69,7 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
   };
 export const logout = () => async (dispatch) => {
   localStorage.removeItem("userInfo")
-    dispatch({type : USER_LOGOUT})
+  dispatch({type: USER_LOGOUT})
+  dispatch({type : MY_ORDERS_RESET})
+  dispatch({type : USER_DETAILS_RESET})
   };
