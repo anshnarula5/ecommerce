@@ -28,12 +28,12 @@ const ProfileScreen = () => {
     if (!userInfo) {
       navigate("/auth");
     } else {
-      if (!user.name) {
+      if (user && !user.name) {
         dispatch(getUserDetails("profile"));
       }
       dispatch(listMyOrders());
     }
-  }, [userInfo, navigate, dispatch, user.name]);
+  }, [userInfo, navigate, dispatch, user]);
   if (loading) {
     return <Loader />;
   }
