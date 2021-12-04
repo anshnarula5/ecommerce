@@ -3,6 +3,8 @@ import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
 import { Link, NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import {logout} from "../redux/actions/userActions";
+import NavbarCollapse from "react-bootstrap/esm/NavbarCollapse";
+import SearchBox from "./SearchBox";
 
 const Header = () => {
   const {userInfo, loading} = useSelector((state) => state.userLogin);
@@ -18,8 +20,9 @@ const Header = () => {
             <Link to="/">MERN Ecomm</Link>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="navbarScroll" />
-          <Navbar.Collapse id="navbarScroll">
+          <NavbarCollapse id="navbarScroll">
             <Nav className="mx-auto">
+            <SearchBox />
               <Nav.Link>
                 <Link to="/cart">
                   <i class="fas fa-shopping-cart"></i> Cart
@@ -42,7 +45,7 @@ const Header = () => {
                 </Nav.Link>
               )}
             </Nav>
-          </Navbar.Collapse>
+          </NavbarCollapse>
         </Container>
       </Navbar>
     </header>

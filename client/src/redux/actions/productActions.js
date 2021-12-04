@@ -14,10 +14,10 @@ import {
 
 } from "../types";
 
-export const listProducts = () => async (dispatch) => {
+export const listProducts = (keyword = "") => async (dispatch) => {
   try {
     dispatch({ type: PRODUCT_LIST_REQUEST });
-    const res = await axios.get("/api/products");
+    const res = await axios.get(`/api/products?keyword=${keyword}`);
     dispatch({ type: PRODUCT_LIST_SUCCESS, payload: res.data });
   } catch (error) {
     dispatch({
