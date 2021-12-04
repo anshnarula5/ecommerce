@@ -24,7 +24,7 @@ const SearchBox = () => {
         className="mr-sm-2 ml-sm-5"
       ></FormControl>
       <Button type="submit" variant="outline-primary"  style = {{borderRadius : 0}}>
-        Search
+      <i class="fas fa-search"></i>
       </Button>
     </Form>
   );
