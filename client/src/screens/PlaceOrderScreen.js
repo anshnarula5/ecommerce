@@ -52,7 +52,7 @@ const PlaceOrderScreen = () => {
     if (success) {
       navigate(`/orders/${order._id}`);
     }
-  }, [success, navigate, order._id]);
+  }, [success, navigate, order]);
   return (
     <>
       <CheckoutSteps step1 step2 step3 step4 />
