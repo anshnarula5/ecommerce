@@ -10,8 +10,7 @@
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dataImport": "node backend/seeder",
-    "dataDestroy": "node backend/seeder -d",
-    "heroku-postbuild" : "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+    "dataDestroy": "node backend/seeder -d"
   },
   "repository": {
     "type": "git",
