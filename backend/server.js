@@ -31,7 +31,6 @@ app.get("/api/config/paypal", (req, res) => {
   res.send(process.env.PAYPAL_CLIENT_ID)
 })
 
-app.get("/", (req, res) => res.send("hello"))
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../client/build")))
