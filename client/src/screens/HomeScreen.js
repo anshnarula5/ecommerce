@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { listProducts } from "../redux/actions/productActions";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
+import TopProducts from "../components/TopProducts";
 import { useParams } from "react-router";
 
 const HomeScreen = () => {
@@ -21,6 +22,7 @@ const HomeScreen = () => {
   }, [dispatch, keyword, pageNumber]);
   return (
     <>
+      {!keyword && <TopProducts />}
       <h1>Latest Products</h1>
       {loading ? (
         <Loader />

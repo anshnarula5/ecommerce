@@ -11,7 +11,9 @@ import {
   PRODUCT_CREATE_REVIEW_FAIL,
   PRODUCT_CREATE_REVIEW_RESET,
   PRODUCT_CREATE_REVIEW_REQUEST,
-
+  TOP_PRODUCTS_REQUEST,
+  TOP_PRODUCTS_SUCCESS,
+  TOP_PRODUCTS_FAIL,
 } from "../types";
 
 export const listProducts = (keyword = "", pageNumber = "") => async (dispatch) => {
@@ -22,6 +24,22 @@ export const listProducts = (keyword = "", pageNumber = "") => async (dispatch) 
   } catch (error) {
     dispatch({
       type: PRODUCT_LIST_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const listTopProducts = () => async (dispatch) => {
+  try {
+    dispatch({ type: TOP_PRODUCTS_REQUEST });
+    const res = await axios.get(`/api/products/top`);
+    dispatch({ type: TOP_PRODUCTS_SUCCESS, payload: res.data });
+  } catch (error) {
+    dispatch({
+      type: TOP_PRODUCTS_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message
