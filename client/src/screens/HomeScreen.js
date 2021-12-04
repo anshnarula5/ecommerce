@@ -9,6 +9,7 @@ import Loader from "../components/Loader";
 import Message from "../components/Message";
 import TopProducts from "../components/TopProducts";
 import { useParams } from "react-router";
+import {Link} from "react-router-dom";
 
 const HomeScreen = () => {
   const { loading, products, error, page, pages } = useSelector(
@@ -23,6 +24,7 @@ const HomeScreen = () => {
   return (
     <>
       {!keyword && <TopProducts />}
+      {keyword && <Link to = "/" className = "btn btn-outline-dark">Go back</Link>}
       <h1>Latest Products</h1>
       {loading ? (
         <Loader />

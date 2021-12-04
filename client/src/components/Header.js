@@ -17,7 +17,7 @@ const Header = () => {
       <Navbar bg="dark" variant="dark" collapseOnSelect expand="lg">
         <Container>
           <Navbar.Brand>
-            <Link to="/">MERN Ecomm</Link>
+            <Link to="/">Easy Buy</Link>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="navbarScroll" />
           <NavbarCollapse id="navbarScroll">
