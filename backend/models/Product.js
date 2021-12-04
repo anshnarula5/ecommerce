@@ -2,11 +2,19 @@ const mongoose = require("mongoose");
 
 const { Schema } = mongoose;
 
-const reviewScehma = new Schema({
-  name: { type: String, required: true },
-  rating: { type: Number, required: true },
-  comment: { type: String, required: true },
-});
+const reviewScehma = new Schema(
+  {
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    name: { type: String, required: true },
+    rating: { type: Number, required: true },
+    comment: { type: String, required: true },
+  },
+  { timestamps: true }
+);
 
 const productSchema = new Schema(
   {

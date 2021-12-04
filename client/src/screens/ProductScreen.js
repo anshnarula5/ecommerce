@@ -1,11 +1,12 @@
-import Button from "@restart/ui/esm/Button";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import {
   Card,
   Col,
   Form,
-  FormControl,
+  FormGroup,
+  FormLabel,
+  Button,
   FormSelect,
   Image,
   ListGroup,
@@ -21,34 +22,57 @@ import Rating from "../components/Rating";
 import { addToCart } from "../redux/actions/cartActions";
 import {
   clearProductDetails,
+  createReview,
   listProductDetails,
 } from "../redux/actions/productActions";
+import {PRODUCT_CREATE_REVIEW_RESET} from "../redux/types";
 
 const ProductScreen = () => {
   const [qty, setQty] = useState(1);
-  const [showAlert, setShowAlert] = useState(false)
+  const [showAlert, setShowAlert] = useState(false);
+  const [formData, setFormData] = useState({rating: 0, comment: ""});
+  const {rating, comment} = formData
   const params = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { product, loading, error } = useSelector(
     (state) => state.productDetails
   );
+  const productReviewCreate = useSelector((state) => state.productReviewCreate);
+  const { success: successReview, error: reviewError } = productReviewCreate;
+  const { userInfo } = useSelector((state) => state.userLogin);
+
   useEffect(() => {
+    if (successReview) {
+      alert("Review submitted")
+      setFormData({rating: 0, comment: ""})
+      dispatch({type : PRODUCT_CREATE_REVIEW_RESET})
+    }
     dispatch(listProductDetails(params.id));
     return () => {
       dispatch(clearProductDetails());
     };
-  }, []);
+  }, [params.id, dispatch, successReview ]);
   const handleAddToCart = () => {
     dispatch(addToCart(product._id, qty));
-    setShowAlert(true)
+    setShowAlert(true);
     setTimeout(() => {
-      setShowAlert(false)
-    }, 3000)
+      setShowAlert(false);
+    }, 3000);
   };
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    dispatch(createReview(params.id, formData))
+  }
+  const handleChange = (e) => {
+    setFormData({...formData, [e.target.name] : e.target.value})
+  }
+  if (loading) {
+    return <Loader />
+  }
   return (
     <>
-      <Link className="btn btn-dark mb-1"  to="/">
+      <Link className="btn btn-dark mb-1" to="/">
         Go Back
       </Link>
       <Row>
@@ -105,14 +129,14 @@ const ProductScreen = () => {
                             value={qty}
                             onChange={(e) => setQty(e.target.value)}
                           >
-                              {[...Array(product.countInStock).keys()].map(
-                                (x) => (
-                                  <option key={x + 1} value={x + 1}>
-                                    {x + 1}
-                                  </option>
-                                )
-                              )}
-                            </FormSelect>
+                            {[...Array(product.countInStock).keys()].map(
+                              (x) => (
+                                <option key={x + 1} value={x + 1}>
+                                  {x + 1}
+                                </option>
+                              )
+                            )}
+                          </FormSelect>
                         </Col>
                       </Row>
                     </ListGroupItem>
@@ -126,12 +150,57 @@ const ProductScreen = () => {
                       Add to cart
                     </Button>
                   </ListGroupItem>
-                  {showAlert && <Message variant = "success" children = {`Added ${qty} items to cart`} />}
+                  {showAlert && (
+                    <Message
+                      variant="success"
+                      children={`Added ${qty} items to cart`}
+                    />
+                  )}
                 </ListGroup>
               </Card>
             </Col>
           </>
         )}
+      </Row>
+      <Row className="my-2">
+        <Col md={6}>
+          <h3>Reviews</h3>
+          {product.reviews.length === 0 && <Message>No reviews yet</Message>}
+          <ListGroup variant="flush">
+            {product.reviews.map((review) => (
+              <ListGroupItem key={review._id}>
+                <strong>{review.name}</strong>
+                <Rating value={review.rating} />
+                <small className = "text-muted">{review.createdAt.substring(0, 10)}</small>
+                <p>{review.comment}</p>
+              </ListGroupItem>
+            ))}
+            <ListGroupItem>
+              <h3>Leave a review</h3>
+              {reviewError && <Message variant="danger">{reviewError}</Message>}
+              {!userInfo ? <Message><Link to = "/auth">Login</Link> to review the product </Message> : (
+                <Form onSubmit = {handleSubmit}>
+                  <FormGroup controlId = "rating">
+                    <FormLabel>Rating</FormLabel>
+                    <FormSelect value={rating} name = "rating" onChange = {handleChange}>
+                      <option value = "">Select</option>
+                      <option value = "1">1</option>
+                      <option value = "2">2</option>
+                      <option value = "3">3</option>
+                      <option value = "4">4</option>
+                      <option value = "5">5</option>
+                    </FormSelect>
+                  </FormGroup>
+                  <FormGroup controlId = "comment">
+                  <FormLabel>Comment</FormLabel>
+                    <Form.Control as = "textarea" row = {3}  onChange = {handleChange} name = "comment" value = {comment} />
+                  </FormGroup>
+                  <Button className = "my-2" type = "submit">Submit</Button>
+                  </Form>
+             ) }
+            </ListGroupItem>
+          </ListGroup>
+        </Col>
       </Row>
     </>
   );

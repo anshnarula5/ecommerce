@@ -7,6 +7,11 @@ import {
   PRODUCT_DETAILS_FAIL,
   PRODUCT_DETAILS_SUCCESS,
   CLEAR_PRODUCT_DETAILS,
+  PRODUCT_CREATE_REVIEW_SUCCESS,
+  PRODUCT_CREATE_REVIEW_FAIL,
+  PRODUCT_CREATE_REVIEW_RESET,
+  PRODUCT_CREATE_REVIEW_REQUEST,
+
 } from "../types";
 
 export const listProducts = () => async (dispatch) => {
@@ -41,4 +46,29 @@ export const listProductDetails = (id) => async (dispatch) => {
 };
 export const clearProductDetails = () => async (dispatch) => {
   dispatch({ type: CLEAR_PRODUCT_DETAILS, payload: {} });
+};
+
+
+export const createReview = (productId, review) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: PRODUCT_CREATE_REVIEW_REQUEST });
+    const {
+      userLogin: { userInfo },
+    } = getState();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+     await axios.post(`/api/products/${productId}/reviews`, review, config);
+    dispatch({ type: PRODUCT_CREATE_REVIEW_SUCCESS});
+  } catch (error) {
+    dispatch({
+      type: PRODUCT_CREATE_REVIEW_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
 };
