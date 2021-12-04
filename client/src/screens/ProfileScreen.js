@@ -16,7 +16,7 @@ import Message from "../components/Message";
 import { listMyOrders } from "../redux/actions/orderActions";
 const ProfileScreen = () => {
   const { userInfo } = useSelector((state) => state.userLogin);
-  const { user, loading, error } = useSelector((state) => state.userDetails);
+  const { user, loading} = useSelector((state) => state.userDetails);
   const {
     loading: loadingOrders,
     error: orderError,
@@ -33,7 +33,7 @@ const ProfileScreen = () => {
       }
       dispatch(listMyOrders());
     }
-  }, [userInfo, navigate, dispatch, getUserDetails]);
+  }, [userInfo, navigate, dispatch, user.name]);
   if (loading) {
     return <Loader />;
   }

@@ -1,13 +1,13 @@
 import React from "react";
 import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import {logout} from "../redux/actions/userActions";
 import NavbarCollapse from "react-bootstrap/esm/NavbarCollapse";
 import SearchBox from "./SearchBox";
 
 const Header = () => {
-  const {userInfo, loading} = useSelector((state) => state.userLogin);
+  const {userInfo} = useSelector((state) => state.userLogin);
   const dispatch = useDispatch()
   const handleLogout = () => {
     dispatch(logout())

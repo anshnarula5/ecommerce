@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { addToCart, removeFromCart } from "../redux/actions/cartActions";
 import {
   Col,
-  FormControl,
   Image,
   ListGroup,
   ListGroupItem,
