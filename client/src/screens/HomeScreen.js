@@ -9,16 +9,21 @@ import Message from "../components/Message";
 import TopProducts from "../components/TopProducts";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
-import "rc-slider/assets/index.css";
-import Slider, { SliderTooltip } from "rc-slider";
+import Box from "@mui/material/Box";
+import Slider from "@mui/material/Slider";
 
-const { createSliderWithTooltip } = Slider;
-const Range = createSliderWithTooltip(Slider.Range);
-const { Handle } = Slider;
+import AOS from "aos";
+import "aos/dist/aos.css";
+
+function valuetext(value) {
+  return `${value}°C`;
+}
 
 const HomeScreen = () => {
-  const [category, setCategory] = useState("")
-  const [sort, setSort] = useState("")
+  const [category, setCategory] = useState("");
+  const [sort, setSort] = useState("");
+  const [range, setRange] = useState([0, 1000]);
+  console.log(range);
   const { loading, products, error, page, pages } = useSelector(
     (state) => state.productList
   );
@@ -26,13 +31,22 @@ const HomeScreen = () => {
   const dispatch = useDispatch();
   const { keyword, pageNumber = 1 } = params;
   useEffect(() => {
-    dispatch(listProducts(keyword, pageNumber, category, sort));
-    console.log(sort)
+    dispatch(listProducts(keyword, pageNumber, category, sort, range));
+    AOS.init({
+      duration: 500,
+    });
   }, [dispatch, keyword, pageNumber, category, sort]);
+  const handleClear = () => {
+    setCategory("");
+    setSort("");
+  };
+
+  const handleChange = (event, newValue) => {
+    setRange(newValue);
+  };
   const handleFilter = () => {
-    console.log(category)
+    dispatch(listProducts(keyword, pageNumber, category, sort, range));
   }
-  
   return (
     <>
       {!keyword && <TopProducts />}
@@ -41,7 +55,7 @@ const HomeScreen = () => {
           Go back
         </Link>
       )}
-      <h1>Latest Products</h1>
+      <h1>{keyword ? `Search results for ${keyword}` : "All products"}</h1>
       {loading ? (
         <Loader />
       ) : error ? (
@@ -49,45 +63,68 @@ const HomeScreen = () => {
       ) : (
         <>
           <Row>
-            <Col md={3}>
-              <Card className="sticky-top" style={{ top: "2rem" }}>
-                <div style={{ paddingInline: 50, paddingBlock: 20 }}>
-                  <p>Range with custom tooltip</p>
-                  <Range
-                    min={0}
-                    max={20}
-                    defaultValue={[3, 10]}
-                    tipFormatter={(value) => value}
-                  />
-                </div>
-                    <Form style={{paddingInline: 50, paddingBlock: 20}}>
-                      <p>Sort </p>
-                      <Form.Select aria-label="Default select example"className="my-2" as="select"
-                                value={sort}
-                                onChange={(e) => setSort(e.target.value)}>
-                        <option>Sort by ...</option>
-                        <option value="plh" name = "plh" checked = {sort === "plh"}>Price Low to high</option>
-                        <option value="phl" name = "phl" checked = {sort === "phl"}>Price high to low</option>
-                        <option value="rhl" name = "rhl" checked = {sort === "rhl"}>Rating high to low</option>
-                        <option value="rlh" name = "rlh" checked = {sort === "rlh"}>Rating low to high</option>
-                      </Form.Select>
-                  <p>Search by category </p>
+            {!keyword && (
+              <Col md={3}>
+                <Card className="sticky-top" style={{ top: "2rem" }}>
+                  <div style={{ paddingInline: 20, paddingBlock: 20 }}>
+                    <Form>
+                      <Row>
+                        <Col md={9}>
+                          <Slider
+                            max = {1000}
+                            getAriaLabel={() => "Temperature range"}
+                            value={range}
+                            onChange={handleChange}
+                            valueLabelDisplay="on"
+                            getAriaValueText={valuetext}
+                          />
+                        </Col>
+                        <Col md={3}>
+                          <Button className="btn-sm btn-inline" onClick = {handleFilter}>Filter</Button>
+                        </Col>
+                      </Row>
+                    </Form>
+                  </div>
+                  <Form style={{ paddingInline: 50, paddingBlock: 10 }}>
+                    <p>Sort </p>
+                    <Form.Select
+                      aria-label="Default select example"
+                      className="mb-2"
+                      as="select"
+                      value={sort}
+                      onChange={(e) => setSort(e.target.value)}
+                    >
+                      <option>Sort by ...</option>
+                      <option value="plh" name="plh" checked={sort === "plh"}>
+                        Price Low to high
+                      </option>
+                      <option value="phl" name="phl" checked={sort === "phl"}>
+                        Price high to low
+                      </option>
+                      <option value="rhl" name="rhl" checked={sort === "rhl"}>
+                        Rating high to low
+                      </option>
+                      <option value="rlh" name="rlh" checked={sort === "rlh"}>
+                        Rating low to high
+                      </option>
+                    </Form.Select>
+                    <p>Search by category </p>
                     <Form.Check
                       className="my-1"
                       label="All"
                       name="group1"
                       type="radio"
-                      checked = {category === ""}
-                      onClick = {() => setCategory("")}
+                      checked={category === ""}
+                      onClick={() => setCategory("")}
                       id={`inline-radio-1`}
                     />
                     <Form.Check
                       className="my-1"
                       label="Electronics"
                       name="group1"
-                        type="radio"
-                      checked = {category === "Electronics"}
-                      onClick = {() => setCategory("Electronics")}
+                      type="radio"
+                      checked={category === "Electronics"}
+                      onClick={() => setCategory("Electronics")}
                       id={`inline-radio-1`}
                     />
                     <Form.Check
@@ -95,27 +132,36 @@ const HomeScreen = () => {
                       label="Gaming"
                       name="group1"
                       type="radio"
-                      checked = {category === "Gaming"}
+                      checked={category === "Gaming"}
                       id={`inline-radio-2`}
-                      onClick = {() => setCategory("Gaming")}
+                      onClick={() => setCategory("Gaming")}
                     />
                     <Form.Check
                       className="my-1"
                       label="Home Appliances"
                       name="group1"
                       type="radio"
-                      checked = {category === "Home Appliances"}
+                      checked={category === "Home Appliances"}
                       id={`inline-radio-3`}
-                      onClick = {() => setCategory("Home Appliances")}
+                      onClick={() => setCategory("Home Appliances")}
                     />
-                    <Button className= "btn-sm my-2" onClick = {handleFilter}>Apply filters</Button>
-                </Form>
-              </Card>
-            </Col>
-            <Col md={9}>
+                    <Button className="btn-sm my-2" onClick={handleClear}>
+                      Clear filters
+                    </Button>
+                  </Form>
+                </Card>
+              </Col>
+            )}
+            <Col md={keyword ? 12 : 9}>
               <Row>
                 {products.map((product) => (
-                  <Col key={product._id} sm={12} md={6} lg={4}>
+                  <Col
+                    key={product._id}
+                    sm={12}
+                    md={6}
+                    lg={keyword ? 3 : 4}
+                    data-aos={"fade-up"}
+                  >
                     <Product product={product} />
                   </Col>
                 ))}
