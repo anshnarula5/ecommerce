@@ -5,6 +5,7 @@ const asyncHandler = require("express-async-handler")
 const getAllProducts = asyncHandler(async (req, res) => {
     const pageSize = 4
     const page = Number(req.query.pageNumber) || 1
+    const category = req.query.category
     const keyword = req.query.keyword ? {
         name: {
             $regex: req.query.keyword,
@@ -12,8 +13,13 @@ const getAllProducts = asyncHandler(async (req, res) => {
         }
     } : {}
     const count = await Product.countDocuments({...keyword})
-    const products = await Product.find({...keyword}).limit(pageSize).skip(pageSize * (page - 1))
-    res.json({products, page,  pages: Math.ceil(count / pageSize)})
+    if (category) {
+        const products = await Product.find({category}).limit(pageSize).skip(pageSize * (page - 1))
+        res.json({products, page,  pages: Math.ceil(count / pageSize)})
+    } else {
+        const products = await Product.find({...keyword}).limit(pageSize).skip(pageSize * (page - 1))
+        res.json({products, page,  pages: Math.ceil(count / pageSize)})
+    }
 })
 const getProductById = asyncHandler(async(req, res) => {
     const {id} = req.params

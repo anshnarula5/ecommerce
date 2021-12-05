@@ -15,10 +15,10 @@ import {
   TOP_PRODUCTS_FAIL,
 } from "../types";
 
-export const listProducts = (keyword = "", pageNumber = "") => async (dispatch) => {
+export const listProducts = (keyword = "", pageNumber = "", category = "") => async (dispatch) => {
   try {
     dispatch({ type: PRODUCT_LIST_REQUEST });
-    const res = await axios.get(`/api/products?keyword=${keyword}&pageNumber=${pageNumber}`);
+    const res = await axios.get(`/api/products?keyword=${keyword}&pageNumber=${pageNumber}&category=${category}`);
     dispatch({ type: PRODUCT_LIST_SUCCESS, payload: res.data });
   } catch (error) {
     dispatch({
