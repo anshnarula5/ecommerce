@@ -18,6 +18,7 @@ const { Handle } = Slider;
 
 const HomeScreen = () => {
   const [category, setCategory] = useState("")
+  const [sort, setSort] = useState("")
   const { loading, products, error, page, pages } = useSelector(
     (state) => state.productList
   );
@@ -25,11 +26,13 @@ const HomeScreen = () => {
   const dispatch = useDispatch();
   const { keyword, pageNumber = 1 } = params;
   useEffect(() => {
-    dispatch(listProducts(keyword, pageNumber, category));
-  }, [dispatch, keyword, pageNumber, category]);
+    dispatch(listProducts(keyword, pageNumber, category, sort));
+    console.log(sort)
+  }, [dispatch, keyword, pageNumber, category, sort]);
   const handleFilter = () => {
     console.log(category)
   }
+  
   return (
     <>
       {!keyword && <TopProducts />}
@@ -47,7 +50,7 @@ const HomeScreen = () => {
         <>
           <Row>
             <Col md={3}>
-              <Card>
+              <Card className="sticky-top" style={{ top: "2rem" }}>
                 <div style={{ paddingInline: 50, paddingBlock: 20 }}>
                   <p>Range with custom tooltip</p>
                   <Range
@@ -57,7 +60,17 @@ const HomeScreen = () => {
                     tipFormatter={(value) => value}
                   />
                 </div>
-                <Form style={{ paddingInline: 50, paddingBlock: 20 }}>
+                    <Form style={{paddingInline: 50, paddingBlock: 20}}>
+                      <p>Sort </p>
+                      <Form.Select aria-label="Default select example"className="my-2" as="select"
+                                value={sort}
+                                onChange={(e) => setSort(e.target.value)}>
+                        <option>Sort by ...</option>
+                        <option value="plh" name = "plh" checked = {sort === "plh"}>Price Low to high</option>
+                        <option value="phl" name = "phl" checked = {sort === "phl"}>Price high to low</option>
+                        <option value="rhl" name = "rhl" checked = {sort === "rhl"}>Rating high to low</option>
+                        <option value="rlh" name = "rlh" checked = {sort === "rlh"}>Rating low to high</option>
+                      </Form.Select>
                   <p>Search by category </p>
                     <Form.Check
                       className="my-1"
