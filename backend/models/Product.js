@@ -60,6 +60,11 @@ const productSchema = new Schema(
       required: true,
       default: 0,
     },
+    category: {
+      type: String,
+      required: true,
+      default : "electronics"
+    }
   },
   { timestamps: true }
 );
