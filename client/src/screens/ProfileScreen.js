@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
-import { getUserDetails } from "../redux/actions/userActions";
+import { getUserDetails, updateUserProfile } from "../redux/actions/userActions";
 import {
   Col,
   ListGroup,
@@ -24,6 +24,7 @@ const ProfileScreen = () => {
   const { email, name, password } = formData;
   const { userInfo } = useSelector((state) => state.userLogin);
   const { user, loading, error } = useSelector((state) => state.userDetails);
+  const { success } = useSelector((state) => state.userUpdateProfile);
   const {
     loading: loadingOrders,
     error: orderError,
@@ -46,6 +47,9 @@ const ProfileScreen = () => {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+  const handleSubmit = () => {
+    dispatch(updateUserProfile(formData))
+  }
   if (loading) {
     return <Loader />;
   }
@@ -57,11 +61,12 @@ const ProfileScreen = () => {
       <Col md={4}>
         <h3>User Profile</h3>
         {loading ? <Loader /> : error && <Message variant="danger">{error}</Message>}
+        {success && <Message variant="success">Profile updated</Message>}
         <ListGroup variant="flush">
           <ListGroupItem>Name : {user.name}</ListGroupItem>
           <ListGroupItem>Email : {user.email}</ListGroupItem>
           <ListGroupItem>
-          <Form>
+          <Form >
             <Form.Group controlId="email" className="my-2">
               <Form.Label>Email Address</Form.Label>
               <Form.Control
@@ -92,6 +97,7 @@ const ProfileScreen = () => {
                 onChange={handleChange}
               />
             </Form.Group>
+            <Button onClick = {handleSubmit} className=  "btn btn-sm">Update</Button>
           </Form>
           </ListGroupItem>
           </ListGroup>

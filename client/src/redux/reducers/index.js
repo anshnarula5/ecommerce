@@ -14,6 +14,7 @@ import {
   userListReducer,
   userDeleteReducer,
   userUpdateReducer,
+  userUpdateProfileReducer
 } from "./userReducer";
 import {
   myOrdersReducer,
@@ -38,6 +39,7 @@ const rootReducer = combineReducers({
   userList: userListReducer,
   userDelete: userDeleteReducer,
   userUpdate: userUpdateReducer,
+  userUpdateProfile : userUpdateProfileReducer
 });
 
 export default rootReducer;
