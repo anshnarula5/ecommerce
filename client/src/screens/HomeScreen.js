@@ -33,12 +33,13 @@ const HomeScreen = () => {
   useEffect(() => {
     dispatch(listProducts(keyword, pageNumber, category, sort, range));
     AOS.init({
-      duration: 500,
+      duration: 100,
     });
   }, [dispatch, keyword, pageNumber, category, sort]);
   const handleClear = () => {
     setCategory("");
     setSort("");
+    setRange([0, 1000])
   };
 
   const handleChange = (event, newValue) => {
@@ -160,7 +161,7 @@ const HomeScreen = () => {
                     sm={12}
                     md={6}
                     lg={keyword ? 3 : 4}
-                    data-aos={"fade-up"}
+                    // data-aos={"fade-up"}
                   >
                     <Product product={product} />
                   </Col>

@@ -18,37 +18,64 @@ const getAllProducts = asyncHandler(async (req, res) => {
     : {};
   const count = await Product.countDocuments({ ...keyword });
   if (category) {
-    const products = await Product.find({ category })
-      .limit(pageSize)
-      .skip(pageSize * (page - 1));
-    res.json({ products, page, pages: Math.ceil(count / pageSize) });
-  } else {
     if (sort === "plh") {
-      const products = await Product.find({ ...keyword })
+      const products = await Product.find({ category, price: {$gt: range.split(",")[0], $lt: range.split(",")[1]} })
         .limit(pageSize)
         .skip(pageSize * (page - 1))
         .sort({ price: 1 });
       res.json({ products, page, pages: Math.ceil(count / pageSize) });
     } else if (sort === "phl") {
-      const products = await Product.find({ ...keyword })
+      const products = await Product.find({ category, price: {$gt: range.split(",")[0], $lt: range.split(",")[1]} })
         .limit(pageSize)
         .skip(pageSize * (page - 1))
         .sort({ price: -1 });
       res.json({ products, page, pages: Math.ceil(count / pageSize) });
     } else if (sort === "rlh") {
-      const products = await Product.find({ ...keyword })
+      const products = await Product.find({ category, price: {$gt: range.split(",")[0], $lt: range.split(",")[1]} })
         .limit(pageSize)
         .skip(pageSize * (page - 1))
         .sort({ rating: 1 });
       res.json({ products, page, pages: Math.ceil(count / pageSize) });
     } else if (sort === "rhl") {
-      const products = await Product.find({ ...keyword })
+      const products = await Product.find({ category, price: {$gt: range.split(",")[0], $lt: range.split(",")[1]} })
         .limit(pageSize)
         .skip(pageSize * (page - 1))
         .sort({ rating: -1 });
       res.json({ products, page, pages: Math.ceil(count / pageSize) });
     } else {
-        const products = await Product.find({price: {$gt: range.split(",")[0], $lt: range.split(",")[1]}} )
+        const products = await Product.find({category, price: {$gt: range.split(",")[0], $lt: range.split(",")[1]}} )
+        .limit(pageSize)
+        .skip(pageSize * (page - 1))
+      res.json({ products, page, pages: Math.ceil(count / pageSize) }); 
+    }
+  
+  } else {
+    if (sort === "plh") {
+      const products = await Product.find({ ...keyword, price: {$gt: range.split(",")[0], $lt: range.split(",")[1]} })
+        .limit(pageSize)
+        .skip(pageSize * (page - 1))
+        .sort({ price: 1 });
+      res.json({ products, page, pages: Math.ceil(count / pageSize) });
+    } else if (sort === "phl") {
+      const products = await Product.find({ ...keyword, price: {$gt: range.split(",")[0], $lt: range.split(",")[1]} })
+        .limit(pageSize)
+        .skip(pageSize * (page - 1))
+        .sort({ price: -1 });
+      res.json({ products, page, pages: Math.ceil(count / pageSize) });
+    } else if (sort === "rlh") {
+      const products = await Product.find({ ...keyword, price: {$gt: range.split(",")[0], $lt: range.split(",")[1]} })
+        .limit(pageSize)
+        .skip(pageSize * (page - 1))
+        .sort({ rating: 1 });
+      res.json({ products, page, pages: Math.ceil(count / pageSize) });
+    } else if (sort === "rhl") {
+      const products = await Product.find({ ...keyword, price: {$gt: range.split(",")[0], $lt: range.split(",")[1]} })
+        .limit(pageSize)
+        .skip(pageSize * (page - 1))
+        .sort({ rating: -1 });
+      res.json({ products, page, pages: Math.ceil(count / pageSize) });
+    } else {
+        const products = await Product.find({...keyword, price: {$gt: range.split(",")[0], $lt: range.split(",")[1]}} )
         .limit(pageSize)
         .skip(pageSize * (page - 1))
       res.json({ products, page, pages: Math.ceil(count / pageSize) }); 
