@@ -7,8 +7,6 @@ import Loader from "../components/Loader";
 import Message from "../components/Message";
 import {
   getUserDetails,
-  login,
-  register,
   updateUser,
 } from "../redux/actions/userActions";
 import { USER_UPDATE_RESET } from "../redux/types";

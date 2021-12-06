@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
-import { listProducts, deleteProduct } from "../redux/actions/productActions";
+import { listProducts, deleteProduct, createProduct } from "../redux/actions/productActions";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 import { Table, Button, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { PRODUCT_CREATE_RESET } from "../redux/types";
 
 const ProductListScreeen = () => {
   const dispatch = useDispatch();
@@ -13,24 +14,35 @@ const ProductListScreeen = () => {
   const { products, error, loading } = useSelector(
     (state) => state.productList
   );
-  const { error: deleteError, loading: deleteLoading, success } = useSelector(
-    (state) => state.deleteProduct
-  );
+  const {
+    error: deleteError,
+    loading: deleteLoading,
+    success,
+  } = useSelector((state) => state.deleteProduct);
   const { userInfo } = useSelector((state) => state.userLogin);
+  const {success: createSuccess, product: createdProduct, loading : createLoading, error : createError } = useSelector(
+    (state) => state.createProduct
+  );
+
   useEffect(() => {
-    if (userInfo && userInfo.isAdmin) {
-      dispatch(listProducts("", "", "", "", [0, 1000]));
-    } else {
+    dispatch({ type: PRODUCT_CREATE_RESET });
+    if (!userInfo.isAdmin) {
       navigate("/auth");
     }
-  }, [dispatch, userInfo, navigate, success]);
+    if (createSuccess) {
+      navigate(`/admin/product/${createdProduct._id}/edit`);
+    } else {
+      dispatch(listProducts("", "", "", "", [0, 1000]));
+    }
+  }, [dispatch, userInfo, navigate, success, createSuccess]);
+
   const handleDelete = (id) => {
     if (window.confirm("Are you sure you want to delete this product?")) {
       dispatch(deleteProduct(id));
     }
   };
   const handleCreate = () => {
-    console.log("asda");
+    dispatch(createProduct())
   };
   return (
     <>
@@ -46,6 +58,9 @@ const ProductListScreeen = () => {
       </Row>
       {deleteLoading && <Loader />}
       {deleteError && <Message variant="danger" children={deleteError} />}
+      
+      {createLoading && <Loader />}
+      {createError && <Message variant="danger" children={createError} />}
       {loading ? (
         <Loader />
       ) : error ? (
