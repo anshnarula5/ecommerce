@@ -5,10 +5,10 @@ const asyncHandler = require("express-async-handler");
 const getAllProducts = asyncHandler(async (req, res) => {
   const pageSize = 10;
   const page = Number(req.query.pageNumber) || 1;
-  const category = req.query.category;
-  const sort = req.query.sort;
-  const range = req.query.range;
-  const keyword = req.query.keyword
+  const category = req.query.category || "" ;
+  const sort = req.query.sort || "";
+  const range = req.query.range || "1,1000";
+  const keyword = req.query.keyword|| ""
     ? {
         name: {
           $regex: req.query.keyword,
@@ -128,10 +128,22 @@ const createProductReview = asyncHandler(async (req, res) => {
     throw new Error("Product not found");
   }
 });
+const deleteProduct = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const product = await Product.findById(id);
+  if (product) {
+    await product.remove()
+    res.json({message : "Product removed"})
+  } else {
+    res.status(404);
+    throw new Error("Product not found");
+  }
+});
 
 module.exports = {
   getAllProducts,
   getProductById,
   createProductReview,
   getTopProducts,
+  deleteProduct
 };

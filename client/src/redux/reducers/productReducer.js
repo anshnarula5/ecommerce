@@ -13,6 +13,9 @@ import {
   TOP_PRODUCTS_REQUEST,
   TOP_PRODUCTS_SUCCESS,
   TOP_PRODUCTS_FAIL,
+  PRODUCT_DELETE_REQUEST,
+  PRODUCT_DELETE_SUCCESS,
+  PRODUCT_DELETE_FAIL,
 } from "../types";
 
 export const productListReducer = (state = { products: [] }, action) => {
@@ -66,6 +69,19 @@ export const topProductsReducer = (state = {products : []}, action) => {
     case TOP_PRODUCTS_SUCCESS:
       return { loading: false, products : payload};
     case TOP_PRODUCTS_FAIL :
+      return {loading: false, error: payload};
+    default:
+      return state;
+  }
+};
+export const deleteProductReducer = (state = {}, action) => {
+  const { type, payload } = action;
+  switch (type) {
+    case PRODUCT_DELETE_REQUEST:
+      return { loading: true};
+    case PRODUCT_DELETE_SUCCESS:
+      return { loading: false, success : true};
+    case PRODUCT_DELETE_FAIL :
       return {loading: false, error: payload};
     default:
       return state;

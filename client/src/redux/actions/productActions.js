@@ -13,6 +13,9 @@ import {
   TOP_PRODUCTS_REQUEST,
   TOP_PRODUCTS_SUCCESS,
   TOP_PRODUCTS_FAIL,
+  PRODUCT_DELETE_REQUEST,
+  PRODUCT_DELETE_SUCCESS,
+  PRODUCT_DELETE_FAIL,
 } from "../types";
 
 export const listProducts = (keyword = "", pageNumber = "", category = "", sort = "", range) => async (dispatch) => {
@@ -39,6 +42,29 @@ export const listTopProducts = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: TOP_PRODUCTS_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+export const deleteProduct = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({type: PRODUCT_DELETE_REQUEST});
+    const {
+      userLogin: { userInfo },
+    } = getState();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+    const res = await axios.delete(`/api/products/${id}`, config);
+    dispatch({ type: PRODUCT_DELETE_SUCCESS });
+  } catch (error) {
+    dispatch({
+      type: PRODUCT_DELETE_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message
