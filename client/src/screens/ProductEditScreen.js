@@ -6,9 +6,11 @@ import { Link } from "react-router-dom";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 import { listProductDetails, updateProduct } from "../redux/actions/productActions";
-import { PRODUCT_UPDATE_RESET, USER_UPDATE_RESET } from "../redux/types";
+import {PRODUCT_UPDATE_RESET, USER_UPDATE_RESET} from "../redux/types";
+import axios from "axios";
 
 const ProductEditScreen = () => {
+  const [uploading, setUploading] = useState(false)
   const [formData, setFormData] = useState({
     price: 0,
     name: "",
@@ -55,7 +57,25 @@ const ProductEditScreen = () => {
     e.preventDefault();
     dispatch(updateProduct({_id : product._id, ...formData}));
   };
-
+  const handleUpload = async (e) => {
+    const file = e.target.files[0]
+    const fd = new FormData()
+    fd.append("image", file)
+    setUploading(true)
+    try {
+      const config = {
+        headers: {
+          "Content-Type" : "multipart/form-data"
+        }
+      }
+      const res = await axios.post("/api/upload", fd, config)
+      setFormData({...formData, image : res.data})
+      setUploading(false)
+    } catch (e) {
+      console.log(e)
+      setUploading(false)
+    }
+  }
   return (
     <Container>
       <Row className="justify-content-md-center">
@@ -104,6 +124,12 @@ const ProductEditScreen = () => {
                 name="image"
                 onChange={handleChange}
               />
+              <Form.Group controlId="formFile" className="mb-3" onChange = {handleUpload}>
+              {/* <image scr={`${window.location.origin}/${picture.name}`}/> */}
+                <Form.Label>Choose file</Form.Label>
+                <Form.Control type="file" />
+              </Form.Group>
+              {uploading && <Loader />}
             </Form.Group>
             <Form.Group controlId="category" className="my-2">
               <Form.Label>Category</Form.Label>
