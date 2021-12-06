@@ -1,6 +1,6 @@
 const express = require("express")
 const {check} = require("express-validator")
-const {loginController, getProfileController, registerController, getAllUsers} = require("../controllers/user")
+const {loginController, getProfileController, registerController, getAllUsers, deleteUser} = require("../controllers/user")
 const {auth, admin} = require("../middleware/authMiddleware")
 const router = express.Router()
 
@@ -19,5 +19,6 @@ const registerValidator = [
 ]
 router.post("/", registerValidator, registerController)
 router.get("/", auth, admin, getAllUsers)
+router.delete("/:id", auth, admin, deleteUser)
 
 module.exports = router 

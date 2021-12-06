@@ -1,24 +1,30 @@
 import React, { useEffect } from "react";
-import {useDispatch, useSelector} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
-import { listUsers } from "../redux/actions/userActions";
+import { deleteUser, listUsers } from "../redux/actions/userActions";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
-import {Table} from "react-bootstrap";
-import {Link} from "react-router-dom";
+import { Table, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 const UserListScreen = () => {
   const dispatch = useDispatch();
-  const navigate=  useNavigate()
+  const navigate = useNavigate();
   const { users, error, loading } = useSelector((state) => state.userList);
-  const {userInfo} = useSelector(state => state.userLogin)
+  const { success : deleteSuccess } = useSelector((state) => state.userDelete);
+  const { userInfo } = useSelector((state) => state.userLogin);
   useEffect(() => {
-      if (userInfo && userInfo.isAdmin) {
-        dispatch(listUsers());
-      } else {
-          navigate("/auth")
+    if (userInfo && userInfo.isAdmin) {
+      dispatch(listUsers());
+    } else {
+      navigate("/auth");
     }
-  }, [dispatch, userInfo, navigate]);
+  }, [dispatch, userInfo, navigate, deleteSuccess]);
+  const handleDelete = (id) => {
+    if (window.confirm("Are you sure you want to delete this user?")) {
+    dispatch(deleteUser(id))
+    }
+  }
   return (
     <>
       <h1>Users</h1>
@@ -38,14 +44,23 @@ const UserListScreen = () => {
             </tr>
           </thead>
           <tbody>
-            {users.map(user => (
-                <tr key = {user._id}>
-                    <td>{user._id}</td>
-                    <td>{user.name}</td>
-                    <td>{user.email}</td>
-                    <td>{user.isAdmin ? "Admin" : "Not admin"}</td>
-                    <td><Link to = {`/user/${user._id}`}>User</Link></td>
-                </tr>
+            {users.map((user) => (
+              <tr key={user._id}>
+                <td>{user._id}</td>
+                <td>{user.name}</td>
+                <td>{user.email}</td>
+                <td>{user.isAdmin ? "Admin" : "Not admin"}</td>
+                <td>
+                  <Link to={`/user/${user._id}/edit`}>
+                    <Button className = "btn btn-sm btn-light" style = {{borderRadius : 0}}>
+                      <i className="fa fa-user"></i>
+                    </Button>
+                  </Link>
+                    <Button className = "btn btn-sm btn-danger" style = {{borderRadius : 0}} onClick = {() => handleDelete(user._id)}>
+                      <i className="fa fa-trash"></i>
+                    </Button>
+                </td>
+              </tr>
             ))}
           </tbody>
         </Table>
