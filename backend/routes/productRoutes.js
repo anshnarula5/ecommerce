@@ -6,6 +6,8 @@ const {
   createProductReview,
   getTopProducts,
   deleteProduct,
+  createProduct,
+  updateProduct,
 } = require("../controllers/product.js");
 
 const router = express.Router();
@@ -19,5 +21,7 @@ router.get("/top", getTopProducts);
 router.get("/:id", getProductById);
 router.post("/:id/reviews", auth, createProductReview);
 router.delete("/:id", auth, admin, deleteProduct);
+router.post("/", auth, admin, createProduct);
+router.put("/:id", auth, admin, updateProduct);
 
 module.exports = router;
