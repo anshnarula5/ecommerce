@@ -7,7 +7,8 @@ const {
   getAllUsers,
   deleteUser,
   getUserById,
-  updateUserProfile,
+  updateUser,
+  updateUserProfile
 } = require("../controllers/user");
 const { auth, admin } = require("../middleware/authMiddleware");
 const router = express.Router();
@@ -20,6 +21,7 @@ const loginValidator = [
 ];
 router.post("/login", loginValidator, loginController);
 router.get("/profile", auth, getProfileController);
+router.put("/profile", auth, updateUserProfile);
 
 const registerValidator = [
   check("email", "Enter correct email").isEmail(),
@@ -33,7 +35,7 @@ const registerValidator = [
 router.post("/", registerValidator, registerController);
 router.get("/", auth, admin, getAllUsers);
 router.delete("/:id", auth, admin, deleteUser);
-router.put("/:id", auth, admin, updateUserProfile);
+router.put("/:id", auth, admin, updateUser);
 router.get("/:id", auth, admin, getUserById);
 
 

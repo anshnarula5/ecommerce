@@ -99,7 +99,7 @@ const getUserById = asyncHandler(async (req, res) => {
   }
 });
 
-const updateUserProfile = asyncHandler(async (req, res) => {
+const updateUser = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id);
 
   if (user) {
@@ -120,6 +120,32 @@ const updateUserProfile = asyncHandler(async (req, res) => {
     throw new Error("User not found");
   }
 });
+const updateUserProfile = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id)
+
+  if (user) {
+    user.name = req.body.name || user.name
+    user.email = req.body.email || user.email
+    if (req.body.password) {
+      const password = req.body.password
+      const hashedPassword = await bcrypt.hash(password, 12);
+      user.password = hashedPassword
+    }
+
+    const updatedUser = await user.save()
+    const token = jwt.sign({ id : updatedUser._id }, "secret", { expiresIn: 360000 });
+    res.json({
+      _id: updatedUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      isAdmin: updatedUser.isAdmin,
+      token
+    })
+  } else {
+    res.status(404)
+    throw new Error('User not found')
+  }
+})
 
 const getAllUsers = asyncHandler(async (req, res) => {
   const users = await User.find({});
@@ -133,5 +159,6 @@ module.exports = {
   getAllUsers,
   deleteUser,
   getUserById,
-  updateUserProfile,
+  updateUser,
+  updateUserProfile 
 };
