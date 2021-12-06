@@ -79,4 +79,11 @@ const getProfileController = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { loginController, getProfileController, registerController };
+const getAllUsers = asyncHandler(async (req, res) => {
+  const users = await User.find({})
+  res.json(users)
+});
+
+
+
+module.exports = { loginController, getProfileController, registerController, getAllUsers };

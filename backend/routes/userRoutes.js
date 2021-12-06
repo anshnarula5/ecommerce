@@ -1,7 +1,7 @@
 const express = require("express")
 const {check} = require("express-validator")
-const {loginController, getProfileController, registerController} = require("../controllers/user")
-const auth = require("../middleware/authMiddleware")
+const {loginController, getProfileController, registerController, getAllUsers} = require("../controllers/user")
+const {auth, admin} = require("../middleware/authMiddleware")
 const router = express.Router()
 
 
@@ -18,5 +18,6 @@ const registerValidator = [
     check("name", "Enter correct name").trim().not().isEmpty()
 ]
 router.post("/", registerValidator, registerController)
+router.get("/", auth, admin, getAllUsers)
 
-module.exports = router
+module.exports = router 
