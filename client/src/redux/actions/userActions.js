@@ -17,7 +17,11 @@ import {
   USER_LIST_RESET,
   USER_DELETE_REQUEST,
   USER_DELETE_SUCCESS,
-  USER_DELETE_FAIL
+  USER_DELETE_FAIL,
+  USER_UPDATE_REQUEST,
+  USER_UPDATE_SUCCESS,
+  USER_UPDATE_FAIL,
+  USER_UPDATE_RESET,
 } from "../types";
 import axios from "axios";
 
@@ -67,7 +71,6 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
     } = getState();
     const config = {
       headers: {
-        "Content-Type": "applciation/json",
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
@@ -129,10 +132,34 @@ export const deleteUser = (id) => async (dispatch, getState) => {
     });
   }
 };
+export const updateUser = (user) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: USER_UPDATE_REQUEST });
+    const {
+      userLogin: { userInfo },
+    } = getState();
+    const config = {
+      headers: {
+        "Content-type" : "application/json",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+    const res = await axios.put(`/api/users/${user.id}`, user, config);
+    dispatch({ type: USER_UPDATE_SUCCESS});
+    dispatch({ type: USER_DETAILS_SUCCESS, payload : res.data });
+  } catch (error) {
+    dispatch({
+      type: USER_UPDATE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
 
 
 export const logout = () => async (dispatch) => {
-  localStorage.removeItem("userInfo");
   localStorage.removeItem("userInfo");
   dispatch({ type: USER_LOGOUT });
   dispatch({ type: MY_ORDERS_RESET });

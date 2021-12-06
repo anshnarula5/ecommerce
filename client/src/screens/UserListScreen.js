@@ -51,7 +51,7 @@ const UserListScreen = () => {
                 <td>{user.email}</td>
                 <td>{user.isAdmin ? "Admin" : "Not admin"}</td>
                 <td>
-                  <Link to={`/user/${user._id}/edit`}>
+                  <Link to={`/admin/user/${user._id}/edit`}>
                     <Button className = "btn btn-sm btn-light" style = {{borderRadius : 0}}>
                       <i className="fa fa-user"></i>
                     </Button>
