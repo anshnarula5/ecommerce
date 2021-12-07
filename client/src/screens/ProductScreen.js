@@ -71,13 +71,7 @@ const ProductScreen = () => {
   }
   return (
     <>
-<<<<<<< HEAD
-      <Meta title={product?.name} />
-
-=======
       <Meta title = {product?.name} />
-      
->>>>>>> c7a4f4462125d93add6f7218832ffeae0f1e51c2
       <Link className="btn btn-dark mb-1" to="/">
         Go Back
       </Link>
@@ -88,18 +82,8 @@ const ProductScreen = () => {
           <Message variant="danger" children={error} />
         ) : (
           <>
-<<<<<<< HEAD
-            <Col md={5}>
-              <Image
-                src={product.image}
-                fluid
-                className="sticky-top"
-                style={{ top: "2rem" }}
-              />
-=======
             <Col md={5} >
                 <Image src={product.image} fluid className="sticky-top" style={{ top: "2rem" }} />
->>>>>>> c7a4f4462125d93add6f7218832ffeae0f1e51c2
             </Col>
             <Col md={7}>
               <Row>
@@ -119,27 +103,6 @@ const ProductScreen = () => {
                   </ListGroup>
                 </Col>
                 <Col md={6}>
-<<<<<<< HEAD
-                  <Card style={{ borderRadius: 0, minHeight: "100%" }}>
-                    <ListGroup.Item>
-                      <Row>
-                        <Col>Price : </Col>
-                        <Col>{product.price}</Col>
-                      </Row>
-                    </ListGroup.Item>
-                    <ListGroupItem>
-                      <Row>
-                        <Col>Status :</Col>
-                        <Col>
-                          {product.countInStock > 0
-                            ? "In stock"
-                            : "Not in stock"}
-                        </Col>
-                      </Row>
-                    </ListGroupItem>
-                    {product.countInStock > 0 && (
-                      <>
-=======
                   <Card style = {{borderRadius : 0 , minHeight : "100%"}}>
                       <ListGroup.Item>
                         <Row>
@@ -159,7 +122,6 @@ const ProductScreen = () => {
                       </ListGroupItem>
                         {product.countInStock > 0 && (
                           <>
->>>>>>> c7a4f4462125d93add6f7218832ffeae0f1e51c2
                         <ListGroupItem>
                           <Row>
                             <Col>Quantity :</Col>
@@ -181,34 +143,24 @@ const ProductScreen = () => {
                           </Row>
                         </ListGroupItem>
                         <ListGroupItem>
-                          <Button
-                            className="btn btn-dark btn-block"
-                            type="button"
-                            onClick={handleAddToCart}
-                          >
-                            Add to cart
-                          </Button>
-                        </ListGroupItem>
-                      </>
-                    )}
+                        <Button
+                          className="btn btn-dark btn-block"
+                          type="button"
+                          onClick={handleAddToCart}
+                        >
+                          Add to cart
+                        </Button>
+                      </ListGroupItem>
+                        </>
+                      )}
+                      
+                      {showAlert && (
+                        <Message
+                          variant="success"
+                          children={`Added ${qty} items to cart`}
+                        />
+                      )}
                   </Card>
-                </Col>
-                {showAlert && (
-                <Message
-                  variant="success"
-                  children={`Added ${qty} items to cart`}
-                />
-              )}
-              </Row>
-
-            
-              <Row>
-                <Col md={12} className="my-2">
-                  <ListGroup variant="flush">
-                    <ListGroupItem>
-                      Description : {product.description}
-                    </ListGroupItem>
-                  </ListGroup>
                 </Col>
               </Row>
               <Row>
