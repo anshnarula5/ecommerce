@@ -24,6 +24,8 @@ import {
   orderCreateReducer,
   orderDetailsReducer,
   orderPayReducer,
+  allOrdersReducer,
+  orderDeliverReducer
 } from "./orderReducers";
 
 const rootReducer = combineReducers({
@@ -45,7 +47,9 @@ const rootReducer = combineReducers({
   userUpdateProfile: userUpdateProfileReducer,
   deleteProduct: deleteProductReducer,
   createProduct: createProductReducer,
-  updateProduct : updateProductReducer
+  updateProduct: updateProductReducer,
+  allOrders: allOrdersReducer,
+  orderDeliver : orderDeliverReducer
 });
 
 export default rootReducer;

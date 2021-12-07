@@ -27,13 +27,20 @@ const TopProducts = () => {
             <Row>
               <Col md={6}>
                 <Image
+                  fluid
                   src={product.image}
                   alt={product.name}
-                  style={{ width: "40rem", height: "30rem" }}
+                  className  = 'carousel-image'
                 />
+                <Carousel.Caption className = "show">
+                <div className="text-center mt-5 ">
+                  <Rating value={product.rating} />
+                  {product.price}
+                </div>
+              </Carousel.Caption>
               </Col>
-              <Col md={6}>
-                <div className="text-center mt-5 hide">
+              <Col md={6} className = "hide">
+              <div className="text-center mt-5 ">
                   <h3>{product.name} </h3>
                   <Rating value={product.rating} />
                   {product.price}
