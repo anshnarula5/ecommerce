@@ -11,9 +11,10 @@ import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
-
+import {Helmet} from "react-helmet"
 import AOS from "aos";
 import "aos/dist/aos.css";
+import Meta from "../components/Meta";
 
 function valuetext(value) {
   return `${value}°C`;
@@ -31,6 +32,7 @@ const HomeScreen = () => {
   const dispatch = useDispatch();
   const { keyword, pageNumber = 1 } = params;
   useEffect(() => {
+    console.log(category)
     dispatch(listProducts(keyword, pageNumber, category, sort, range));
     AOS.init({
       duration: 800,
@@ -50,6 +52,7 @@ const HomeScreen = () => {
   }
   return (
     <>
+      <Meta title=  "Welcome to easy-buy" description = "Shop online made easy"/>
       {!keyword && <TopProducts />}
       {keyword && (
         <Link to="/" className="btn btn-outline-dark">
@@ -139,6 +142,24 @@ const HomeScreen = () => {
                     />
                     <Form.Check
                       className="my-1"
+                      label="Clothing"
+                      name="group1"
+                      type="radio"
+                      checked={category === "Clothing"}
+                      id={`inline-radio-2`}
+                      onClick={() => setCategory("Clothing")}
+                    />
+                    <Form.Check
+                      className="my-1"
+                      label="Books"
+                      name="group1"
+                      type="radio"
+                      checked={category === "Books"}
+                      id={`inline-radio-2`}
+                      onClick={() => setCategory("Books")}
+                    />
+                    <Form.Check
+                      className="my-1"
                       label="Home Appliances"
                       name="group1"
                       type="radio"
@@ -157,7 +178,7 @@ const HomeScreen = () => {
               <Row>
                 {products.map((product) => (
                   <Col
-                  className='align-items-stretch d-flex'
+                    className='align-items-stretch d-flex'
                     key={product._id}
                     sm={12}
                     md={6}

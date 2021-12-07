@@ -52,7 +52,7 @@ const ProductEditScreen = () => {
             });
           }
     }
-  }, [product, id, updateSuccess]);
+  }, [product, id, updateSuccess, navigate, dispatch]);
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(updateProduct({_id : product._id, ...formData}));
@@ -152,7 +152,7 @@ const ProductEditScreen = () => {
               />
             </Form.Group>
             <Form.Group controlId="countInStock" className="my-2">
-              <Form.Label>Price</Form.Label>
+              <Form.Label>Count In Stock </Form.Label>
               <Form.Control
                 type="number"
                 placeholder="enter countInStock"
@@ -162,8 +162,10 @@ const ProductEditScreen = () => {
               />
             </Form.Group>
             <Form.Group controlId="description" className="my-2">
-              <Form.Label>Price</Form.Label>
+              <Form.Label>Description</Form.Label>
               <Form.Control
+                as = "textarea"
+                rows = {9}
                 type="text"
                 placeholder="enter description"
                 value={description}

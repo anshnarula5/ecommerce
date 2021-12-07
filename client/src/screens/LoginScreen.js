@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
+import Meta from "../components/Meta";
 import { login, register } from "../redux/actions/userActions";
 
 const LoginScreen = () => {
@@ -37,6 +38,7 @@ const LoginScreen = () => {
   }
   return (
     <Container>
+      <Meta title=  "Login" />
       <Row className="justify-content-md-center">
         {error && <Message variant="danger">{error}</Message>}
         {loading && <Loader />}

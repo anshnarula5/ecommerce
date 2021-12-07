@@ -14,6 +14,7 @@ import {
   FormSelect,
 } from "react-bootstrap";
 import Message from "../components/Message";
+import Meta from "../components/Meta";
 
 const CartScreen = () => {
   const location = useLocation();
@@ -43,6 +44,8 @@ const CartScreen = () => {
     }
   };
   return (
+    <>
+      <Meta title=  "View Cart" />
     <Row>
       <Col md={8}>
         <h1>Shopping Cart</h1>
@@ -126,7 +129,8 @@ const CartScreen = () => {
           </ListGroup>
         </Card>
       </Col>
-    </Row>
+      </Row>
+      </>
   );
 };
 

@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
 import { Link } from "react-router-dom";
 import { createOrder } from "../redux/actions/orderActions";
+import Meta from "../components/Meta";
 
 const PlaceOrderScreen = () => {
   const dispatch = useDispatch();
@@ -55,6 +56,7 @@ const PlaceOrderScreen = () => {
   }, [success, navigate, order]);
   return (
     <>
+      <Meta title = {`Place order `} />
       <CheckoutSteps step1 step2 step3 step4 />
       <Row>
         <Col md={8}>

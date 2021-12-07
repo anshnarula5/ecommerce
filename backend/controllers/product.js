@@ -178,8 +178,8 @@ const createProduct = asyncHandler(async (req, res) => {
       "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80",
     brand: "sample brand",
     category: "sample car",
-    numReviews: 2,
-    countInStock: 2,
+    numReviews: 0,
+    countInStock: 0,
     description: "sadsad as da",
   }); 
   const createdProduct = await product.save();

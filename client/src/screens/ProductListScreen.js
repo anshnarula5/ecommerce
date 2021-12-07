@@ -7,6 +7,7 @@ import Message from "../components/Message";
 import { Table, Button, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { PRODUCT_CREATE_RESET } from "../redux/types";
+import Meta from "../components/Meta";
 
 const ProductListScreeen = () => {
   const dispatch = useDispatch();
@@ -46,6 +47,8 @@ const ProductListScreeen = () => {
   };
   return (
     <>
+      <Meta title = {`All products `} />
+      
       <Row className="align-items-center">
         <Col>
           <h1>Products</h1>

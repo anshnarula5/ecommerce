@@ -15,6 +15,7 @@ import { Link } from "react-router-dom";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 import { listMyOrders } from "../redux/actions/orderActions";
+import Meta from "../components/Meta";
 const ProfileScreen = () => {
   const [formData, setFormData] = useState({
     email: "",
@@ -58,6 +59,7 @@ const ProfileScreen = () => {
   }
   return (
     <Row>
+      <Meta title = {user.name} />
       <Col md={4}>
         <h3>User Profile</h3>
         {loading ? <Loader /> : error && <Message variant="danger">{error}</Message>}
