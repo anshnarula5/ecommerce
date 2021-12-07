@@ -1,14 +1,52 @@
-main{
+main {
   min-height: 80vh;
 }
-a{
+
+a {
   text-decoration: none;
-  color:  inherit;
-}
-a:hover{
   color: inherit;
 }
 
-h1{
+a:hover {
+  color: inherit;
+}
+
+h1 {
   padding: 0.3rem;
+}
+
+.product-image {
+  height: 15rem;
+  object-fit: scale-down;
+}
+
+.carousel-image {
+  object-fit: cover;
+  width: 40rem;
+  height: 30rem
+}
+
+.show {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  .product-image {
+    object-fit: contain;
+  }
+
+  .carousel-image {
+    width: 100%;
+    max-height: 20rem;
+    object-fit: cover;
+  }
+
+  .show {
+    display: inline;
+    color: black;
+  }
+
+  .hide {
+    display: none;
+  }
 }
