@@ -71,8 +71,8 @@ const ProductScreen = () => {
   }
   return (
     <>
-      <Meta title = {product.name} />
-      
+      <Meta title={product.name} />
+
       <Link className="btn btn-dark mb-1" to="/">
         Go Back
       </Link>
@@ -83,8 +83,13 @@ const ProductScreen = () => {
           <Message variant="danger" children={error} />
         ) : (
           <>
-            <Col md={5} >
-              <Image src={product.image} fluid className="sticky-top" style={{ top: "2rem" }} />
+            <Col md={5}>
+              <Image
+                src={product.image}
+                fluid
+                className="sticky-top"
+                style={{ top: "2rem" }}
+              />
             </Col>
             <Col md={7}>
               <Row>
@@ -104,25 +109,25 @@ const ProductScreen = () => {
                   </ListGroup>
                 </Col>
                 <Col md={6}>
-                  <Card style = {{borderRadius : 0 , minHeight : "100%"}}>
-                      <ListGroup.Item>
-                        <Row>
-                          <Col>Price : </Col>
-                          <Col>{product.price}</Col>
-                        </Row>
-                      </ListGroup.Item>
-                      <ListGroupItem>
-                        <Row>
-                          <Col>Status :</Col>
-                          <Col>
-                            {product.countInStock > 0
-                              ? "In stock"
-                              : "Not in stock"}
-                          </Col>
-                        </Row>
-                      </ListGroupItem>
-                        {product.countInStock > 0 && (
-                          <>
+                  <Card style={{ borderRadius: 0, minHeight: "100%" }}>
+                    <ListGroup.Item>
+                      <Row>
+                        <Col>Price : </Col>
+                        <Col>{product.price}</Col>
+                      </Row>
+                    </ListGroup.Item>
+                    <ListGroupItem>
+                      <Row>
+                        <Col>Status :</Col>
+                        <Col>
+                          {product.countInStock > 0
+                            ? "In stock"
+                            : "Not in stock"}
+                        </Col>
+                      </Row>
+                    </ListGroupItem>
+                    {product.countInStock > 0 && (
+                      <>
                         <ListGroupItem>
                           <Row>
                             <Col>Quantity :</Col>
@@ -144,35 +149,39 @@ const ProductScreen = () => {
                           </Row>
                         </ListGroupItem>
                         <ListGroupItem>
-                        <Button
-                          className="btn btn-dark btn-block"
-                          type="button"
-                          onClick={handleAddToCart}
-                        >
-                          Add to cart
-                        </Button>
-                      </ListGroupItem>
-                        </>
-                      )}
-                      
-                      {showAlert && (
-                        <Message
-                          variant="success"
-                          children={`Added ${qty} items to cart`}
-                        />
-                      )}
+                          <Button
+                            className="btn btn-dark btn-block"
+                            type="button"
+                            onClick={handleAddToCart}
+                          >
+                            Add to cart
+                          </Button>
+                        </ListGroupItem>
+                      </>
+                    )}
                   </Card>
                 </Col>
               </Row>
+
+              {showAlert && (
+                <Row>
+                  <Col className="mt-2">
+                    <Message
+                      variant="success"
+                      children={`Added ${qty} items to cart`}
+                    />
+                  </Col>
+                </Row>
+              )}
               <Row>
-                <Col md={12} className = "my-2">
-                 <ListGroup variant="flush">
+                <Col md={12} className="my-2">
+                  <ListGroup variant="flush">
                     <ListGroupItem>
                       Description : {product.description}
-                  </ListGroupItem>
-              </ListGroup>
-              </Col>
-                </Row>
+                    </ListGroupItem>
+                  </ListGroup>
+                </Col>
+              </Row>
               <Row className="my-2">
                 <Col md={12}>
                   <h3>Reviews</h3>
