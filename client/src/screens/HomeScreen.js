@@ -162,7 +162,6 @@ const HomeScreen = () => {
                     sm={12}
                     md={6}
                     lg={keyword ? 3 : 4}
-                    data-aos={"fade-up"}
                   >
                     <Product product={product} />
                   </Col>
