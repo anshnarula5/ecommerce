@@ -12,10 +12,7 @@ import { Table, Button, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { PRODUCT_CREATE_RESET } from "../redux/types";
 import { listAllOrders } from "../redux/actions/orderActions";
-<<<<<<< HEAD
 import Meta from "../components/Meta";
-=======
->>>>>>> bcb12f25a0954600ec5932fefc10218dc075d676
 
 const OrdersListScreen = () => {
   const dispatch = useDispatch();
@@ -40,11 +37,8 @@ const OrdersListScreen = () => {
 
   return (
     <>
-<<<<<<< HEAD
       <Meta title=  "All orders" />
       
-=======
->>>>>>> bcb12f25a0954600ec5932fefc10218dc075d676
      <h1>Orders</h1>
       {loading ? (
         <Loader />
