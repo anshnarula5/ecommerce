@@ -29,15 +29,11 @@ const OrdersListScreen = () => {
         dispatch(listAllOrders());
   }, []);
 
-<<<<<<< HEAD
-
-=======
   const handleDelete = (id) => {
     if (window.confirm("Are you sure you want to delete this product?")) {
       dispatch(deleteProduct(id));
     }
   };
->>>>>>> c7a4f4462125d93add6f7218832ffeae0f1e51c2
 
   return (
     <>

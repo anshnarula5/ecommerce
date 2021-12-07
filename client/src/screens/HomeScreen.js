@@ -9,7 +9,9 @@ import Message from "../components/Message";
 import TopProducts from "../components/TopProducts";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
+import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
+import {Helmet} from "react-helmet"
 import AOS from "aos";
 import "aos/dist/aos.css";
 import Meta from "../components/Meta";
@@ -22,22 +24,26 @@ const HomeScreen = () => {
   const [category, setCategory] = useState("");
   const [sort, setSort] = useState("");
   const [range, setRange] = useState([0, 1000]);
+  console.log(range);
   const { loading, products, error, page, pages } = useSelector(
     (state) => state.productList
   );
   const params = useParams();
   const dispatch = useDispatch();
-  const {keyword, pageNumber = 1} = params;
+  const { keyword, pageNumber = 1 } = params;
+  useEffect(() => {
+    console.log(category)
+    dispatch(listProducts(keyword, pageNumber, category, sort, range));
+    AOS.init({
+      duration: 800,
+    });
+  }, [dispatch, keyword, pageNumber, category, sort]);
   const handleClear = () => {
     setCategory("");
     setSort("");
     setRange([0, 1000])
   };
 
-  useEffect(() => {
-    dispatch(listProducts(keyword, pageNumber, category, sort, range));
-  }, [dispatch, keyword, pageNumber, category, sort, setRange]);
-  
   const handleChange = (event, newValue) => {
     setRange(newValue);
   };
@@ -172,7 +178,7 @@ const HomeScreen = () => {
               <Row>
                 {products.map((product) => (
                   <Col
-                    className='align-items-md-stretch d-md-flex'
+                    className='align-items-stretch d-flex'
                     key={product._id}
                     sm={12}
                     md={6}

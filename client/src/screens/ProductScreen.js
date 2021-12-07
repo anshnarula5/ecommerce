@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import {
   Card,
   Col,
@@ -71,7 +71,8 @@ const ProductScreen = () => {
   }
   return (
     <>
-      <Meta title = {product?.name} />
+      <Meta title = {product.name} />
+      
       <Link className="btn btn-dark mb-1" to="/">
         Go Back
       </Link>
@@ -83,7 +84,7 @@ const ProductScreen = () => {
         ) : (
           <>
             <Col md={5} >
-                <Image src={product.image} fluid className="sticky-top" style={{ top: "2rem" }} />
+              <Image src={product.image} fluid className="sticky-top" style={{ top: "2rem" }} />
             </Col>
             <Col md={7}>
               <Row>

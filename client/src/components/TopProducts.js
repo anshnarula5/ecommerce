@@ -32,7 +32,7 @@ const TopProducts = () => {
                   alt={product.name}
                   className  = 'carousel-image'
                 />
-                <Carousel.Caption className = "show">
+                <Carousel.Caption className = "caption-carousel">
                 <div className="text-center mt-5 ">
                   <Rating value={product.rating} />
                   {product.price}
