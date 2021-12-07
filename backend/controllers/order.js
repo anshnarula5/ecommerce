@@ -59,6 +59,18 @@ const payOrder = expressAsyncHandler(async (req, res) => {
     throw new Error("No order found");
   }
 });
+const deliverOrder  = expressAsyncHandler(async (req, res) => {
+  const order = await Order.findById(req.params.id);
+  if (order) {
+    order.isDelivered = true;
+    order.deliveredAt = Date.now();
+    const updatedOrder = await order.save();
+    res.json(updatedOrder);
+  } else {
+    res.status(404);
+    throw new Error("No order found");
+  }
+});
 const getMyOrders = expressAsyncHandler(async (req, res) => {
   const orders = await Order.find({ user: req.user._id });
   if (orders) {
@@ -68,5 +80,9 @@ const getMyOrders = expressAsyncHandler(async (req, res) => {
     throw new Error("No order found");
   }
 });
+const getAllOrders = expressAsyncHandler(async (req, res) => {
+  const orders = await Order.find({}).populate("user", "id name");
+  res.json(orders);
+});
 
-module.exports = { addOrderItem, getOrderById, payOrder, getMyOrders };
+module.exports = { addOrderItem, getOrderById, payOrder, getMyOrders, getAllOrders, deliverOrder };
