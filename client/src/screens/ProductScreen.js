@@ -109,7 +109,7 @@ const ProductScreen = () => {
                   </ListGroup>
                 </Col>
                 <Col md={6}>
-                  <Card style={{ borderRadius: 0, minHeight: "100%" }}>
+                  <Card style={{ borderRadius: 0, minHeight: "100%" }} className = "productStatus">
                     <ListGroup.Item>
                       <Row>
                         <Col>Price : </Col>

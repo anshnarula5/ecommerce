@@ -30,7 +30,35 @@ h1 {
   display: none;
 }
 
+.filterModal {
+  display: none;
+}
+.btn-circle {
+  width: 30px;
+  height: 30px;
+  padding: 6px 0px;
+  border-radius: 15px;
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.42857;
+}
+
+
+
 @media screen and (max-width: 768px) {
+  .modalButton {
+    position: fixed;
+    bottom: 1rem;
+    right : 1rem;
+  
+  }
+  .productStatus{
+    margin-top: .5rem;
+  }
+  .filterModal {
+    display: inline-block;
+  }
+
   .product-image {
     object-fit: contain;
   }
@@ -46,7 +74,9 @@ h1 {
     color: black;
   }
 
-  .hide {
+  .hide,
+  .filter {
     display: none;
   }
+
 }
