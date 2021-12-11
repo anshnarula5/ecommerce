@@ -65,7 +65,7 @@ const CartScreen = () => {
                     <Link to={`/product/${item.product}`}>{item.name}</Link>
                   </Col>
                   <Col md={2} className="my-1">
-                    {item.price}
+                   $ {item.price}
                   </Col>
                   <Col md={2} xs={6}>
                     <FormSelect

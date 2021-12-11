@@ -8,7 +8,7 @@ const CheckoutSteps = ({ step1, step2, step3, step4 }) => {
       <Nav.Item>
         {step1 ? (
           <Nav.Link>
-            <Link to="/login">Sign In</Link>
+            <Link to="/auth">Sign In</Link>
           </Nav.Link>
         ) : (
           <Nav.Link disabled>Sign In</Nav.Link>

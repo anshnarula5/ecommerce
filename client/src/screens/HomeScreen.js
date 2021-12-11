@@ -68,7 +68,7 @@ const HomeScreen = () => {
         <>
           <Row>
             {!keyword && (
-              <Col md={3}>
+              <Col md={3} className = "my-1">
                 <Card className="sticky-top" style={{ top: "2rem" }}>
                   <div style={{ paddingInline: 20, paddingBlock: 20 }}>
                     <Form>
@@ -174,7 +174,7 @@ const HomeScreen = () => {
                 </Card>
               </Col>
             )}
-            <Col md={keyword ? 12 : 9}>
+            <Col md={keyword ? 12 : 9}  className = "mt-1">
               <Row>
                 {products.map((product) => (
                   <Col

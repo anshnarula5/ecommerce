@@ -41,7 +41,7 @@ h1 {
     object-fit: cover;
   }
 
-  .show {
+  .caption-carousel {
     display: inline;
     color: black;
   }
