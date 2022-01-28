@@ -29,7 +29,6 @@ const HomeScreen = () => {
   const [category, setCategory] = useState("");
   const [sort, setSort] = useState("");
   const [range, setRange] = useState([0, 1000]);
-  console.log(range);
   const { loading, products, error, page, pages } = useSelector(
     (state) => state.productList
   );
