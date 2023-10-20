@@ -9,7 +9,7 @@ const Order = require('./models/Order.js')
 dotenv.config()
 
 mongoose
-  .connect(process.env.DB_URL, {
+  .connect("mongodb+srv://ansh:ansh123@cluster0.tpqha.mongodb.net/?retryWrites=true&w=majority", {
     useUnifiedTopology: true,
     useNewUrlParser: false,
   })

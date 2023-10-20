@@ -20,7 +20,7 @@ const TopProducts = () => {
   ) : error ? (
     <Message variant="danger">{error}</Message>
   ) : (
-    <Carousel pause="hover" className="bg-dark">
+    <Carousel pause="hover" className="bg-dark ">
       {products.map((product) => (
         <Carousel.Item key={product._id}>
           <Link to={`/product/${product._id}`}>
@@ -35,13 +35,13 @@ const TopProducts = () => {
                 <Carousel.Caption className = "caption-carousel">
                 <div className="text-center mt-5 ">
                   <Rating value={product.rating} />
-                  {product.price}
+                  <p  style={{color : "white"}}> {product.price}</p> 
                 </div>
               </Carousel.Caption>
               </Col>
               <Col md={6} className = "hide">
               <div className="text-center mt-5 ">
-                  <h3>{product.name} </h3>
+                  <h3 style={{color : "white"}}>{product.name} </h3>
                   <Rating value={product.rating} />
                   {product.price}
                 </div>

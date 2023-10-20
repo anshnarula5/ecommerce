@@ -79,13 +79,13 @@ const HomeScreen = () => {
               <div style={{ paddingInline: 10, paddingBlock: 10 }}>
                 <Form>
                   <Row>
-                    <Col md={9}>
+                    <Col md={5}>
                       <Slider
                         max={1000}
                         getAriaLabel={() => "Temperature range"}
                         value={range}
                         onChange={handleChange}
-                        valueLabelDisplay="on"
+                        valueLabelDisplay="auto"
                         getAriaValueText={valuetext}
                       />
                     </Col>
@@ -113,16 +113,16 @@ const HomeScreen = () => {
                       onChange={(e) => {setSort(e.target.value); handleClose()}}
                 >
                   <option>Sort by ...</option>
-                  <option value="plh" name="plh" checked={sort === "plh"} >  
+                  <option value="plh" name="plh" defaultChecked={sort === "plh"} >  
                     Price Low to high
                   </option>
-                  <option value="phl" name="phl" checked={sort === "phl"} >
+                  <option value="phl" name="phl" defaultChecked={sort === "phl"} >
                     Price high to low
                   </option>
-                  <option value="rhl" name="rhl" checked={sort === "rhl"} >
+                  <option value="rhl" name="rhl" defaultChecked={sort === "rhl"} >
                     Rating high to low
                   </option>
-                  <option value="rlh" name="rlh" checked={sort === "rlh"}>
+                  <option value="rlh" name="rlh" defaultChecked={sort === "rlh"}>
                     Rating low to high
                   </option>
                 </Form.Select>
@@ -132,7 +132,7 @@ const HomeScreen = () => {
                   label="All"
                   name="group1"
                   type="radio"
-                  checked={category === ""}
+                  defaultChecked={category === ""}
                       onClick={() => {setCategory(""); handleClose()}}
                   id={`inline-radio-1`}
                 />
@@ -141,7 +141,7 @@ const HomeScreen = () => {
                   label="Electronics"
                   name="group1"
                   type="radio"
-                  checked={category === "Electronics"}
+                  defaultChecked={category === "Electronics"}
                   onClick={() => {setCategory("Electronics"); handleClose()}}
                   id={`inline-radio-1`}
                 />
@@ -150,7 +150,7 @@ const HomeScreen = () => {
                   label="Gaming"
                   name="group1"
                   type="radio"
-                  checked={category === "Gaming"}
+                  defaultChecked={category === "Gaming"}
                   id={`inline-radio-2`}
                   onClick={() =>{ setCategory("Gaming"); handleClose()}}
                 />
@@ -159,7 +159,7 @@ const HomeScreen = () => {
                   label="Clothing"
                   name="group1"
                   type="radio"
-                  checked={category === "Clothing"}
+                  defaultChecked={category === "Clothing"}
                   id={`inline-radio-2`}
                   onClick={() => {setCategory("Clothing"); handleClose()}}
                 />
@@ -168,7 +168,7 @@ const HomeScreen = () => {
                   label="Books"
                   name="group1"
                   type="radio"
-                  checked={category === "Books"}
+                  defaultChecked={category === "Books"}
                   id={`inline-radio-2`}
                   onClick={() => {setCategory("Books"); handleClose()}}
                 />
@@ -177,7 +177,7 @@ const HomeScreen = () => {
                   label="Home Appliances"
                   name="group1"
                   type="radio"
-                  checked={category === "Home Appliances"}
+                  defaultChecked={category === "Home Appliances"}
                   id={`inline-radio-3`}
                   onClick={() => {setCategory("Home Appliances"); handleClose()}}
                 />
@@ -195,13 +195,13 @@ const HomeScreen = () => {
                   <div style={{ paddingInline: 20, paddingBlock: 20 }}>
                     <Form>
                       <Row>
-                        <Col md={9}>
+                        <Col md={8}>
                           <Slider
                             max={1000}
                             getAriaLabel={() => "Temperature range"}
                             value={range}
                             onChange={handleChange}
-                            valueLabelDisplay="on"
+                            valueLabelDisplay="auto"
                             getAriaValueText={valuetext}
                           />
                         </Col>
@@ -226,16 +226,16 @@ const HomeScreen = () => {
                       onChange={(e) => setSort(e.target.value)}
                     >
                       <option>Sort by ...</option>
-                      <option value="plh" name="plh" checked={sort === "plh"}>
+                      <option value="plh" name="plh" defaultChecked={sort === "plh"}>
                         Price Low to high
                       </option>
-                      <option value="phl" name="phl" checked={sort === "phl"}>
+                      <option value="phl" name="phl" defaultChecked={sort === "phl"}>
                         Price high to low
                       </option>
-                      <option value="rhl" name="rhl" checked={sort === "rhl"}>
+                      <option value="rhl" name="rhl" defaultChecked={sort === "rhl"}>
                         Rating high to low
                       </option>
-                      <option value="rlh" name="rlh" checked={sort === "rlh"}>
+                      <option value="rlh" name="rlh" defaultChecked={sort === "rlh"}>
                         Rating low to high
                       </option>
                     </Form.Select>
@@ -245,7 +245,7 @@ const HomeScreen = () => {
                       label="All"
                       name="group1"
                       type="radio"
-                      checked={category === ""}
+                      defaultChecked={category === ""}
                       onClick={() => setCategory("")}
                       id={`inline-radio-1`}
                     />
@@ -254,7 +254,7 @@ const HomeScreen = () => {
                       label="Electronics"
                       name="group1"
                       type="radio"
-                      checked={category === "Electronics"}
+                      defaultChecked={category === "Electronics"}
                       onClick={() => setCategory("Electronics")}
                       id={`inline-radio-1`}
                     />
@@ -263,7 +263,7 @@ const HomeScreen = () => {
                       label="Gaming"
                       name="group1"
                       type="radio"
-                      checked={category === "Gaming"}
+                      defaultChecked={category === "Gaming"}
                       id={`inline-radio-2`}
                       onClick={() => setCategory("Gaming")}
                     />
@@ -272,7 +272,7 @@ const HomeScreen = () => {
                       label="Clothing"
                       name="group1"
                       type="radio"
-                      checked={category === "Clothing"}
+                      defaultChecked={category === "Clothing"}
                       id={`inline-radio-2`}
                       onClick={() => setCategory("Clothing")}
                     />
@@ -281,7 +281,7 @@ const HomeScreen = () => {
                       label="Books"
                       name="group1"
                       type="radio"
-                      checked={category === "Books"}
+                      defaultChecked={category === "Books"}
                       id={`inline-radio-2`}
                       onClick={() => setCategory("Books")}
                     />
@@ -290,7 +290,7 @@ const HomeScreen = () => {
                       label="Home Appliances"
                       name="group1"
                       type="radio"
-                      checked={category === "Home Appliances"}
+                      defaultChecked={category === "Home Appliances"}
                       id={`inline-radio-3`}
                       onClick={() => setCategory("Home Appliances")}
                     />
@@ -328,9 +328,9 @@ const HomeScreen = () => {
       <button
         onClick={handleShow} 
         type="button"
-        class="btn btn-primary btn-circle btn-xl modalButton"
+        className="btn btn-primary btn-circle btn-xl modalButton"
       >
-        <i class="fa fa-list"></i>
+        <i className="fa fa-list"></i>
       </button>
     </>
   );

@@ -35,6 +35,7 @@ const ProductListScreeen = () => {
     } else {
       dispatch(listProducts("", "", "", "", [0, 1000]));
     }
+    console.log(products)
   }, [dispatch, userInfo, navigate, success, createSuccess]);
 
   const handleDelete = (id) => {
@@ -94,7 +95,7 @@ const ProductListScreeen = () => {
                       className="btn btn-sm btn-light"
                       style={{ borderRadius: 0 }}
                     >
-                      <i class="fas fa-external-link-alt"></i>
+                      <i className="fas fa-external-link-alt"></i>
                     </Button>
                   </Link>
                   <Button

@@ -25,7 +25,7 @@ const Header = () => {
             <SearchBox />
               <Nav.Link>
                 <Link to="/cart">
-                  <i class="fas fa-shopping-cart"></i> Cart
+                  <i className="fas fa-shopping-cart"></i> Cart
                 </Link>
               </Nav.Link>
               {userInfo ? (
@@ -40,7 +40,7 @@ const Header = () => {
               ) : (
                 <Nav.Link>
                 <Link to="/auth">
-                  <i class="fas fa-sign-in-alt"></i> Sign In
+                  <i className="fas fa-sign-in-alt"></i> Sign In
                 </Link>
                 </Nav.Link>
               )}

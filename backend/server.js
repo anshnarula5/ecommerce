@@ -14,7 +14,7 @@ const app = express();
 const mongoose = require("mongoose");
 const {notFound, errorHandler} = require("./middleware/errorMiddleware.js");
 mongoose
-  .connect(process.env.DB_URL, {
+  .connect("mongodb+srv://ansh:ansh123@cluster0.tpqha.mongodb.net/?retryWrites=true&w=majority", {
     useUnifiedTopology: true,
     useNewUrlParser: true,
   })
@@ -40,8 +40,6 @@ if (process.env.NODE_ENV === "production") {
   app.get("*", (req, res) => res.sendFile(path.resolve(__dirname, "..", "client", "build", "index.html")))
 }
 
-// app.use('/uploads', express.static(path.join(__dirname, '../uploads')))
-
 app.use(notFound)
 
 app.use(errorHandler)
@@ -49,5 +47,3 @@ app.use(errorHandler)
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => console.log(`Running on ${PORT}`));
-
-// https://easy-buy123.herokuapp.com

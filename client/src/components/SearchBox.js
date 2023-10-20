@@ -29,7 +29,7 @@ const SearchBox = () => {
         variant="outline-primary"
         style={{ borderRadius: 0 }}
       >
-        <i class="fas fa-search"></i>
+        <i className="fas fa-search"></i>
       </Button>
     </Form>
   );
