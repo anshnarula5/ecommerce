@@ -1,5 +1,5 @@
 
-# Project Title
+# EasyBuy
 
 A fully functional Ecommerce app enabling users to effortlessly browse and purchase products across diverse categories.
 
